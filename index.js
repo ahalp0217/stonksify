@@ -24,6 +24,7 @@ function validate(word) {
 function stonksify(word) {
   //If a word starts with a c replace it with a k
   //Example: cat => kat
+  word = word.toLowerCase();
   if (word.indexOf("c") === 0) {
     word = word.replace(/^c/, "k");
     return word;
