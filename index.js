@@ -1,22 +1,36 @@
-// find elements
-var input = $("#word");
-var output = $("#wordstonked");
-var button = $("button");
+const input = $("#word");
+const output = $("#wordstonked");
+const button = $("button");
+const canvas = document.getElementById("stonkscanvas");
+const context = canvas.getContext("2d");
+const imageObj = new Image();
+
+//Load image
+imageObj.onload = function() {
+  context.drawImage(imageObj, 10, 10);
+};
+imageObj.src = "stonks.jpg";
 
 // handle click and add class
 button.on("click", function() {
   let word = input.val();
-  console.log("clicked");
+  console.log("Clicked");
   if (validate(word)) {
     console.log("Good word");
     let newWerd = stonksify(word);
-    output.text(newWerd);
+    //Clear canvas before drawing new word
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    //Redraw image
+    context.drawImage(imageObj, 10, 10);
+    context.font = "40pt Impact";
+    context.strokeText(newWerd, 430, 350);
   }
 });
 
 function validate(word) {
   if (word.indexOf(" ") >= 0) {
     alert("Please enter a valid word");
+    return false;
   }
   return true;
 }
