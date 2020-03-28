@@ -3,3 +3,21 @@ body {
   width: 80%;
   text-align: center;
 }
+
+#werd_container {
+  position: absolute;
+}
+
+#werd {
+  padding-top: 35px;
+  padding-bottom: 35px;
+  padding-left: 60px;
+  padding-right: 60px;
+  margin: 0;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 4.5em;
+  -webkit-text-stroke: 2px black;
+  -webkit-text-fill-color: white;
+  background-image: radial-gradient(#ffffffcc 35%,transparent 60%);
+
+}
