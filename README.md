@@ -1,1 +1,3 @@
-# stonksify
+# Stonksify
+
+https://stonksify.com/
