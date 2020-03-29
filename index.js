@@ -25,6 +25,8 @@ const consonants = "bcdfghjklmnpqrstvwxz";
 // rules are executed in a sorted manner by priortiy, then rule regex length
 // default
 let rules = [
+  // moon -> mun supercedes all
+  ["moon", "mun", 1000],
   // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
   // stock -> stonk, but note e missing to exclude not funny examples like section -> sention
@@ -33,10 +35,12 @@ let rules = [
   ["nc", "nk", 1],
   // computer -> komputer
   ["^c", "k", 1],
-  // health -> helth
-  ["ea", "e", 1],
+  // health -> helf
+  ["ealth", "elf", 1],
   // super -> sooper, support -> soopport
-  ["sup[!p]", "soop", 1]
+  ["up([^p])", "oop$1", 1],
+  // moon -> mün, boobs -> bübs, moo -> mü
+  ["([^^])oo", "$1ü", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length
