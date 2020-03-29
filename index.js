@@ -20,13 +20,13 @@ imageObj.onload = function () {
 imageObj.src = "stonks.jpg";
 
 const vowels = "aeiouy";
-const consonants = "abcdfghjklmnpqrstvwxz";
+const consonants = "bcdfghjklmnpqrstvwxz";
 // rules have format [regex_to_replace, text_to_insert, priority]
 // rules are executed in a sorted manner by priortiy, then rule regex length
 // default
 let rules = [
   ["([a-z]+)(ch)", "$1hc", 1],
-  ["([aiouy])(c)", "$1n", 1],
+  ["([aigiouy])(c)", "$1n", 1],
   ["nc", "nk", 1],
   ["^c", "k", 1],
   ["ea", "e", 1]
