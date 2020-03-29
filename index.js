@@ -1,6 +1,7 @@
 const input = $("#word");
 const output = $("#wordstonked");
 const button = $("button");
+const devMode = isLocal();
 
 //Canvas Settings
 const canvas = document.getElementById("stonkscanvas");
@@ -112,9 +113,11 @@ function isLocal() {
   }
 }
 
-if (isLocal()) {
+function addDevModeMessageBox() {
   $('body').prepend("<p class='alert'>DEVELOPER MODE</p>")
 }
 
-testStonkify();
-isLocal();
+if (devMode) {
+  addDevModeMessageBox();
+  testStonkify();
+}
