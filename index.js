@@ -7,18 +7,22 @@ const imageObj = new Image();
 const vowels = "aeiouy";
 const consonants = "";
 // rules have format [regex_to_replace, text_to_insert, priority]
-// rules are executed in a sorted manner by priortiy, rule regex length
+// rules are executed in a sorted manner by priortiy, then rule regex length
 // default
 let rules = [
   ["([a-z]+)(ch)", "$1hc", 1],
   ["([aiouy])(c)", "$1n", 1],
   ["nc", "nk", 1],
-  ["^c", "k", 1]
+  ["^c", "k", 1],
+  ["ea", "e", 1]
 ];
 
+// sorts rules to conform to above comment order. Priority and then rule regex length
 const stonksifyRules = rules.sort(function compare(a, b) {
+  // sort by priority
   if (a[2] > b[2]) return -1;
   else if (a[2] < b[2]) return 1;
+  // sort by regex length
   else {
     if (a[0].length > b[0].length) return -1;
     else if (a[0].length < b[0].length) return 1;
@@ -63,13 +67,7 @@ function stonksify(word) {
     let replaceWith = stonksifyRules[i][1];
     let newWord = word.replace(toReplace, replaceWith);
     console.log(
-      "Stonksify rule " +
-        i +
-        ": replace regexp '" +
-        toReplace +
-        "' with '" +
-        replaceWith +
-        "'."
+      `Stonksify rule ${i}: replace regexp ${toReplace} + with '${replaceWith}.`
     );
     word = newWord;
   }
