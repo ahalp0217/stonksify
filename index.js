@@ -57,12 +57,6 @@ function validate(word) {
 }
 
 function stonksify(word) {
-  let modifiedCharacters = Array.apply(null, Array(word.length)).map(
-    function() {
-      return 0;
-    }
-  );
-
   word = word.toLowerCase();
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
@@ -77,33 +71,7 @@ function stonksify(word) {
         replaceWith +
         "'."
     );
-
-    let changedCharactersModified = false;
-    let changedCharactersIndexesChanged = [];
-    for (let ii = 0; ii < modifiedCharacters.length; ii++) {
-      if (word[ii] != newWord[ii]) {
-        if (modifiedCharacters[ii] != 0) {
-          changedCharactersModified = true;
-          console.log(
-            "Rejecting applciation of rule '" +
-              toReplace +
-              "' because it changes already changed character at " +
-              ii +
-              "."
-          );
-          break;
-        } else {
-          changedCharactersIndexesChanged.push(ii);
-        }
-      }
-    }
-
-    if (!changedCharactersModified) {
-      for (let ii = 0; ii < changedCharactersIndexesChanged.length; ii++) {
-        modifiedCharacters[changedCharactersIndexesChanged[ii]] = 1;
-      }
-      word = newWord;
-    }
+    word = newWord;
   }
   return word;
 }
