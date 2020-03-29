@@ -155,9 +155,25 @@ function displayPossibleWords(possibleWords) {
   for (let i = 0; i < possibleWords.length; i++) {
     let pword = possibleWords[i];
     wordList.append(
-      `<button onclick="drawWordOnCanvas('${pword}')">` + pword + "</button>"
+      `<button class="wordoptions ${
+        i === possibleWords.length - 1 ? "selectborder" : ""
+      }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
+        pword +
+        "</button>"
     );
   }
+}
+
+function clickedPossibleWords(word) {
+  $(".wordoptions").each(function(index) {
+    if ($(this).val() === word) {
+      $(this)
+        .toggleClass("selectborder")
+        .siblings()
+        .removeClass("selectborder");
+    }
+  });
+  drawWordOnCanvas(word);
 }
 
 function testStonksify() {
