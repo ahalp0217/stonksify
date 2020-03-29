@@ -116,6 +116,5 @@ if (isLocal()) {
   $('body').prepend("<p class='alert'>DEVELOPER MODE</p>")
 }
 
-
 testStonkify();
 isLocal();
