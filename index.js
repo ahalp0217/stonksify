@@ -14,7 +14,7 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-imageObj.onload = function () {
+imageObj.onload = function() {
   ctx.drawImage(imageObj, 10, 10);
 };
 imageObj.src = "stonks.jpg";
@@ -25,11 +25,18 @@ const consonants = "bcdfghjklmnpqrstvwxz";
 // rules are executed in a sorted manner by priortiy, then rule regex length
 // default
 let rules = [
+  // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
-  ["([aigiouy])(c)", "$1n", 1],
+  // stock -> stonk, but note e missing to exclude not funny examples like section -> sention
+  ["([aiouy])(c)", "$1n", 1],
+  // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
   ["nc", "nk", 1],
+  // computer -> komputer
   ["^c", "k", 1],
-  ["ea", "e", 1]
+  // health -> helth
+  ["ea", "e", 1],
+  // super -> sooper, support -> soopport
+  ["sup[!p]", "soop", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length
@@ -45,14 +52,14 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on('keyup', function (e) {
+input.on("keyup", function(e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-button.on("click", function () {
+button.on("click", function() {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
@@ -108,9 +115,9 @@ function testStonkify() {
   //Imported testWords from words.js
   for (const key of Object.keys(testWords)) {
     if (stonksify(key) === testWords[key]) {
-      colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green")
+      colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
     } else {
-      colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red")
+      colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red");
     }
   }
 }
@@ -126,7 +133,7 @@ function isLocal() {
 }
 
 function addDevModeMessageBox() {
-  $('body').prepend("<p class='alert'>DEVELOPER MODE</p>")
+  $("body").prepend("<p class='alert'>DEVELOPER MODE</p>");
 }
 
 if (devMode) {
