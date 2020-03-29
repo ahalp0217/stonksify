@@ -101,8 +101,21 @@ function testStonkify() {
     }
   }
 }
-testStonkify();
 
 function colorTrace(msg, color) {
   console.log("%c" + msg, "color:" + color + ";font-weight:bold;");
 }
+
+function isLocal() {
+  if (!location.hostName) {
+    return true;
+  }
+}
+
+if (isLocal()) {
+  $('body').prepend("<p class='alert'>DEVELOPER MODE</p>")
+}
+
+
+testStonkify();
+isLocal();
