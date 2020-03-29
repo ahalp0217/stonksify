@@ -108,7 +108,7 @@ function colorTrace(msg, color) {
 }
 
 function isLocal() {
-  if (!location.hostName) {
+  if (!location.hostname) {
     return true;
   }
 }
