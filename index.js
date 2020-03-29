@@ -5,6 +5,26 @@ const canvas = document.getElementById("stonkscanvas");
 const context = canvas.getContext("2d");
 const imageObj = new Image();
 const vowels = "aeiouy";
+const consonants = "";
+// rules have format [regex_to_replace, text_to_insert, priority]
+// rules are executed in a sorted manner by priortiy, rule regex length
+// default
+let rules = [
+  ["([a-z]+)(ch)", "$1hc", 1],
+  ["([aiouy])(c)", "$1n", 1],
+  ["nc", "nk", 1],
+  ["^c", "k", 1]
+];
+
+const stonksifyRules = rules.sort(function compare(a, b) {
+  if (a[2] > b[2]) return -1;
+  else if (a[2] < b[2]) return 1;
+  else {
+    if (a[0].length > b[0].length) return -1;
+    else if (a[0].length < b[0].length) return 1;
+    else return 0;
+  }
+});
 
 //Load image
 imageObj.onload = function() {
@@ -37,31 +57,53 @@ function validate(word) {
 }
 
 function stonksify(word) {
-  //If a word starts with a c replace it with a k
-  //Example: cat => kat
+  let modifiedCharacters = Array.apply(null, Array(word.length)).map(
+    function() {
+      return 0;
+    }
+  );
+
   word = word.toLowerCase();
-  if (word.indexOf("c") === 0) {
-    word = word.replace(/^c/, "k");
-    return word;
-  }
+  for (let i = 0; i < stonksifyRules.length; i++) {
+    let toReplace = new RegExp(stonksifyRules[i][0]);
+    let replaceWith = stonksifyRules[i][1];
+    let newWord = word.replace(toReplace, replaceWith);
+    console.log(
+      "Stonksify rule " +
+        i +
+        ": replace regexp '" +
+        toReplace +
+        "' with '" +
+        replaceWith +
+        "'."
+    );
 
-  //If a word has one c replace it with an n
-  //Example: stocks => stonks
-  if (word.split("c").length - 1 === 1) {
-    word = word.replace(/c/g, "n");
-    return word;
-  }
+    let changedCharactersModified = false;
+    let changedCharactersIndexesChanged = [];
+    for (let ii = 0; ii < modifiedCharacters.length; ii++) {
+      if (word[ii] != newWord[ii]) {
+        if (modifiedCharacters[ii] != 0) {
+          changedCharactersModified = true;
+          console.log(
+            "Rejecting applciation of rule '" +
+              toReplace +
+              "' because it changes already changed character at " +
+              ii +
+              "."
+          );
+          break;
+        } else {
+          changedCharactersIndexesChanged.push(ii);
+        }
+      }
+    }
 
-  //If a word has one o in it replace it with an e
-  //Example: frog => freg;
-  if (word.split("o").length - 1 === 1) {
-    word = word.replace(/o/g, "e");
-    return word;
+    if (!changedCharactersModified) {
+      for (let ii = 0; ii < changedCharactersIndexesChanged.length; ii++) {
+        modifiedCharacters[changedCharactersIndexesChanged[ii]] = 1;
+      }
+      word = newWord;
+    }
   }
-
-  //TODO:
-  //Add more conditions, counting syllables?
-  //Add instant image creation from imgflip?
-  //
   return word;
 }
