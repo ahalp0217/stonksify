@@ -1,7 +1,11 @@
 const input = $("#word");
 const output = $("#wordstonked");
-const button = $("button");
+const submitButton = $("#submit");
+const shareButton = $("#share");
 const devMode = isLocal();
+
+const url = new URL(window.location.href);
+const urlGetWord = url.searchParams.get("word");
 
 //Canvas Settings
 const canvas = document.getElementById("stonkscanvas");
@@ -16,6 +20,10 @@ ctx.strokeStyle = "#000";
 const imageObj = new Image();
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 10, 10);
+  //Need to add word only after the image is loaded, otherwise no image will appear
+  if (urlGetWord) {
+    enterWord(urlGetWord);
+  }
 };
 imageObj.src = "stonks.jpg";
 
@@ -52,16 +60,35 @@ input.on('keyup', function (e) {
   }
 });
 
-button.on("click", function () {
+submitButton.on("click", function () {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
+shareButton.on("click", function () {
+  copyToClipboard();
+  shareButton.text("Copied to Clipboard!")
+});
+
+function copyToClipboard() {
+  //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
+  let copyText = "https://stonksify.com/?word=" + urlGetWord || input.val();
+
+  const fakeInput = document.createElement('textarea');
+  fakeInput.value = copyText;
+  $("body").append(fakeInput);
+  fakeInput.select();
+  document.execCommand('copy');
+  document.body.removeChild(fakeInput);
+}
+
 function enterWord(word) {
   if (validate(word)) {
-    console.log("Valid word!");
+    console.log("Valid word: " + word);
     let newWerd = stonksify(word);
     drawWordOnCanvas(newWerd);
+    shareButton.prop('disabled', false);
+    shareButton.text("Share")
   }
 }
 
@@ -104,7 +131,7 @@ function stonksify(word) {
   return word;
 }
 
-function testStonkify() {
+function testStonksify() {
   //Imported testWords from words.js
   for (const key of Object.keys(testWords)) {
     if (stonksify(key) === testWords[key]) {
@@ -126,10 +153,10 @@ function isLocal() {
 }
 
 function addDevModeMessageBox() {
-  $('body').prepend("<p class='alert'>DEVELOPER MODE</p>")
+  $('body').prepend("<p class='alert'>DEVELOPER MODE</p>");
 }
 
 if (devMode) {
   addDevModeMessageBox();
-  testStonkify();
+  testStonksify();
 }
