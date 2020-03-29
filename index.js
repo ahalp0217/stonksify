@@ -144,7 +144,7 @@ function stonksify(word, showAllWords = true) {
     word = newWord;
   }
   console.groupEnd();
-  if (showAllWords && devMode) {
+  if (showAllWords) {
     displayPossibleWords(possibleWords);
   }
   return word;
