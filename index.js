@@ -4,6 +4,7 @@ const button = $("button");
 const canvas = document.getElementById("stonkscanvas");
 const context = canvas.getContext("2d");
 const imageObj = new Image();
+const vowels = "aeiouy";
 
 //Load image
 imageObj.onload = function() {
