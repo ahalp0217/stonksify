@@ -90,3 +90,19 @@ function stonksify(word) {
   //
   return word;
 }
+
+function testStonkify() {
+  //Imported testWords from words.js
+  for (const key of Object.keys(testWords)) {
+    if (stonksify(key) === testWords[key]) {
+      colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green")
+    } else {
+      colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red")
+    }
+  }
+}
+testStonkify();
+
+function colorTrace(msg, color) {
+  console.log("%c" + msg, "color:" + color + ";font-weight:bold;");
+}
