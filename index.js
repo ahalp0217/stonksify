@@ -1,29 +1,40 @@
 const input = $("#word");
 const output = $("#wordstonked");
 const button = $("button");
+
+//Canvas Settings
 const canvas = document.getElementById("stonkscanvas");
-const context = canvas.getContext("2d");
-const imageObj = new Image();
+const ctx = canvas.getContext("2d");
+ctx.shadowColor = "#fff";
+ctx.shadowBlur = 50;
+ctx.fillStyle = "#fff";
+ctx.font = "40pt Impact";
+ctx.strokeStyle = "#000";
 
 //Load image
-imageObj.onload = function() {
-  context.drawImage(imageObj, 10, 10);
+const imageObj = new Image();
+imageObj.onload = function () {
+  ctx.drawImage(imageObj, 10, 10);
 };
 imageObj.src = "stonks.jpg";
 
 // handle click and add class
-button.on("click", function() {
+button.on("click", function () {
   let word = input.val();
   console.log("Clicked");
   if (validate(word)) {
     console.log("Good word");
     let newWerd = stonksify(word);
     //Clear canvas before drawing new word
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     //Redraw image
-    context.drawImage(imageObj, 10, 10);
-    context.font = "40pt Impact";
-    context.strokeText(newWerd, 430, 350);
+    ctx.drawImage(imageObj, 10, 10);
+    //Draw text multiple times so the white radial shadow is more pronounced
+    for (let i = 0; i < 10; i++) {
+      ctx.fillText(newWerd, 430, 350);
+    }
+    ctx.strokeText(newWerd, 430, 350);
+    ctx.strokeText(newWerd, 430, 350);
   }
 });
 
