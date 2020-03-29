@@ -90,6 +90,7 @@ function validate(word) {
 
 function stonksify(word) {
   word = word.toLowerCase();
+  console.groupCollapsed("Regex Details: " + word);
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
     let replaceWith = stonksifyRules[i][1];
@@ -99,6 +100,7 @@ function stonksify(word) {
     );
     word = newWord;
   }
+  console.groupEnd();
   return word;
 }
 
