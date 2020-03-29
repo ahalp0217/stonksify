@@ -18,25 +18,40 @@ imageObj.onload = function () {
 };
 imageObj.src = "stonks.jpg";
 
-// handle click and add class
-button.on("click", function () {
-  let word = input.val();
-  console.log("Clicked");
-  if (validate(word)) {
-    console.log("Good word");
-    let newWerd = stonksify(word);
-    //Clear canvas before drawing new word
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //Redraw image
-    ctx.drawImage(imageObj, 10, 10);
-    //Draw text multiple times so the white radial shadow is more pronounced
-    for (let i = 0; i < 10; i++) {
-      ctx.fillText(newWerd, 430, 350);
-    }
-    ctx.strokeText(newWerd, 430, 350);
-    ctx.strokeText(newWerd, 430, 350);
+input.on('keyup', function (e) {
+  if (e.which === 13) {
+    console.log("Hit Enter");
+    enterWord(input.val());
   }
 });
+
+button.on("click", function () {
+  console.log("Clicked Submit");
+  enterWord(input.val());
+});
+
+function enterWord(word) {
+  if (validate(word)) {
+    console.log("Valid word!");
+    let newWerd = stonksify(word);
+    drawWordOnCanvas(newWerd);
+  }
+}
+
+function drawWordOnCanvas(newWerd) {
+  console.log("Start Draw");
+  //Clear canvas before drawing new word
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //Redraw image
+  ctx.drawImage(imageObj, 10, 10);
+  //Draw text multiple times so the white radial shadow is more pronounced
+  for (let i = 0; i < 10; i++) {
+    ctx.fillText(newWerd, 430, 350);
+  }
+  ctx.strokeText(newWerd, 430, 350);
+  ctx.strokeText(newWerd, 430, 350);
+  console.log("End Draw");
+}
 
 function validate(word) {
   if (word.indexOf(" ") >= 0) {
