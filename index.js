@@ -14,10 +14,37 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
+const imageObj = new Image();
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 10, 10);
 };
 imageObj.src = "stonks.jpg";
+
+const vowels = "aeiouy";
+const consonants = "";
+// rules have format [regex_to_replace, text_to_insert, priority]
+// rules are executed in a sorted manner by priortiy, then rule regex length
+// default
+let rules = [
+  ["([a-z]+)(ch)", "$1hc", 1],
+  ["([aiouy])(c)", "$1n", 1],
+  ["nc", "nk", 1],
+  ["^c", "k", 1],
+  ["ea", "e", 1]
+];
+
+// sorts rules to conform to above comment order. Priority and then rule regex length
+const stonksifyRules = rules.sort(function compare(a, b) {
+  // sort by priority
+  if (a[2] > b[2]) return -1;
+  else if (a[2] < b[2]) return 1;
+  // sort by regex length
+  else {
+    if (a[0].length > b[0].length) return -1;
+    else if (a[0].length < b[0].length) return 1;
+    else return 0;
+  }
+});
 
 input.on('keyup', function (e) {
   if (e.which === 13) {
@@ -63,32 +90,16 @@ function validate(word) {
 }
 
 function stonksify(word) {
-  //If a word starts with a c replace it with a k
-  //Example: cat => kat
   word = word.toLowerCase();
-  if (word.indexOf("c") === 0) {
-    word = word.replace(/^c/, "k");
-    return word;
+  for (let i = 0; i < stonksifyRules.length; i++) {
+    let toReplace = new RegExp(stonksifyRules[i][0]);
+    let replaceWith = stonksifyRules[i][1];
+    let newWord = word.replace(toReplace, replaceWith);
+    console.log(
+      `Stonksify rule ${i}: replace regexp ${toReplace} + with '${replaceWith}.`
+    );
+    word = newWord;
   }
-
-  //If a word has one c replace it with an n
-  //Example: stocks => stonks
-  if (word.split("c").length - 1 === 1) {
-    word = word.replace(/c/g, "n");
-    return word;
-  }
-
-  //If a word has one o in it replace it with an e
-  //Example: frog => freg;
-  if (word.split("o").length - 1 === 1) {
-    word = word.replace(/o/g, "e");
-    return word;
-  }
-
-  //TODO:
-  //Add more conditions, counting syllables?
-  //Add instant image creation from imgflip?
-  //
   return word;
 }
 
