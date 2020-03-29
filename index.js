@@ -35,20 +35,34 @@ const consonants = "bcdfghjklmnpqrstvwxz";
 let rules = [
   // moon -> mun supercedes all
   ["moon", "mun", 1000],
+  // jackson -> jonkson
+  ["jack", "jonk", 1000],
   // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
   // stock -> stonk, but note e missing to exclude not funny examples like section -> sention
-  ["([aiouy])(c)", "$1n", 1],
+  ["([^^][aouy])(c)", "$1n", 1],
   // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
   ["nc", "nk", 1],
   // computer -> komputer
-  ["^c", "k", 1],
+  ["^c([^e])", "k$1", 1],
   // health -> helf
   ["ealth", "elf", 1],
   // super -> sooper, support -> soopport
   ["up([^p])", "oop$1", 1],
-  // moon -> mün, boobs -> bübs, moo -> mü
-  ["([^^])oo", "$1ü", 1]
+  // moon -> mun, boobs -> bubs, moo -> mu
+  ["([^^s])oo", "$1u", 1],
+  // buisness -> bizness
+  ["([^^])usi", "$1iz", 1],
+  // daniel -> doniel, jackson -> jonkson
+  ["([^^])(an|ac)", "$1on", 1],
+  // jad -> jed
+  ["([^^e])ad", "$1ed", 1],
+  // math -> meth
+  ["([^^ed])a([" + consonants + "])", "$1e$2", 1],
+  // thick -> thicc
+  ["ck", "cc", 1],
+  // action -> aktion
+  ["ac", "ak", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length
@@ -71,25 +85,25 @@ input.on("keyup", function(e) {
   }
 });
 
-submitButton.on("click", function () {
+submitButton.on("click", function() {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function () {
+shareButton.on("click", function() {
   copyToClipboard();
-  shareButton.text("Copied to Clipboard!")
+  shareButton.text("Copied to Clipboard!");
 });
 
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
   let copyWord = urlGetWord ? urlGetWord : input.val();
   let copyText = "https://stonksify.com/?word=" + copyWord;
-  const fakeInput = document.createElement('textarea');
+  const fakeInput = document.createElement("textarea");
   fakeInput.value = copyText;
   $("body").append(fakeInput);
   fakeInput.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
   document.body.removeChild(fakeInput);
 }
 
@@ -98,8 +112,8 @@ function enterWord(word) {
     console.log("Valid word: " + word);
     let newWerd = stonksify(word);
     drawWordOnCanvas(newWerd);
-    shareButton.prop('disabled', false);
-    shareButton.text("Share")
+    shareButton.prop("disabled", false);
+    shareButton.text("Share");
   }
 }
 
@@ -136,6 +150,9 @@ function stonksify(word) {
     console.log(
       `Stonksify rule ${i}: replace regexp ${toReplace} + with '${replaceWith}.`
     );
+    if (newWord != word) {
+      console.log(`Rule applied, created werd ${newWord}.`);
+    }
     word = newWord;
   }
   console.groupEnd();
@@ -164,7 +181,7 @@ function isLocal() {
 }
 
 function addDevModeMessageBox() {
-  $('body').prepend("<p class='alert'>DEVELOPER MODE</p>");
+  $("body").prepend("<p class='alert'>DEVELOPER MODE</p>");
 }
 
 if (devMode) {
