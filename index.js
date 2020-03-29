@@ -2,6 +2,7 @@ const input = $("#word");
 const output = $("#wordstonked");
 const submitButton = $("#submit");
 const shareButton = $("#share");
+const wordList = $("#wordlist");
 const devMode = isLocal();
 
 const url = new URL(window.location.href);
@@ -126,26 +127,41 @@ function validate(word) {
   return true;
 }
 
-function stonksify(word) {
+function stonksify(word, showAllWords=true) {
   word = word.toLowerCase();
+  let possibleWords = []
   console.groupCollapsed("Regex Details: " + word);
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
     let replaceWith = stonksifyRules[i][1];
     let newWord = word.replace(toReplace, replaceWith);
+    if (possibleWords.indexOf(newWord) === -1) {
+        possibleWords.push(newWord);
+    }
     console.log(
-      `Stonksify rule ${i}: replace regexp ${toReplace} + with '${replaceWith}.`
+      `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
     );
     word = newWord;
   }
   console.groupEnd();
+  if (showAllWords && devMode) {
+    displayPossibleWords(possibleWords);
+  }
   return word;
+}
+
+function displayPossibleWords(possibleWords) {
+    wordList.html("");
+    for (let i = 0; i < possibleWords.length; i++) {
+        let pword = possibleWords[i];
+        wordList.append(`<button onclick="drawWordOnCanvas('${pword}')">` + pword + "</button>");
+    }
 }
 
 function testStonksify() {
   //Imported testWords from words.js
   for (const key of Object.keys(testWords)) {
-    if (stonksify(key) === testWords[key]) {
+    if (stonksify(key, false) === testWords[key]) {
       colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
     } else {
       colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red");
