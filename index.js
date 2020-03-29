@@ -18,7 +18,7 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-imageObj.onload = function () {
+imageObj.onload = function() {
   ctx.drawImage(imageObj, 10, 10);
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
@@ -33,11 +33,22 @@ const consonants = "bcdfghjklmnpqrstvwxz";
 // rules are executed in a sorted manner by priortiy, then rule regex length
 // default
 let rules = [
+  // moon -> mun supercedes all
+  ["moon", "mun", 1000],
+  // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
-  ["([aigiouy])(c)", "$1n", 1],
+  // stock -> stonk, but note e missing to exclude not funny examples like section -> sention
+  ["([aiouy])(c)", "$1n", 1],
+  // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
   ["nc", "nk", 1],
+  // computer -> komputer
   ["^c", "k", 1],
-  ["ea", "e", 1]
+  // health -> helf
+  ["ealth", "elf", 1],
+  // super -> sooper, support -> soopport
+  ["up([^p])", "oop$1", 1],
+  // moon -> mün, boobs -> bübs, moo -> mü
+  ["([^^])oo", "$1ü", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length
@@ -53,7 +64,7 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on('keyup', function (e) {
+input.on("keyup", function(e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
@@ -134,9 +145,9 @@ function testStonksify() {
   //Imported testWords from words.js
   for (const key of Object.keys(testWords)) {
     if (stonksify(key) === testWords[key]) {
-      colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green")
+      colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
     } else {
-      colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red")
+      colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red");
     }
   }
 }
