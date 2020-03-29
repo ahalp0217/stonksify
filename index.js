@@ -69,13 +69,6 @@ function stonksify(word) {
     return word;
   }
 
-  //If a word ends in th, replace it with f
-  //Example: health => helf
-  if (word.endsWith("th") === 0) {
-    word = word.replace(/^c/g, "k");
-    return word;
-  }
-
   //TODO:
   //Add more conditions, counting syllables?
   //Add instant image creation from imgflip?
