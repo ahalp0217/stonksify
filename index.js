@@ -72,25 +72,25 @@ input.on("keyup", function(e) {
   }
 });
 
-submitButton.on("click", function () {
+submitButton.on("click", function() {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function () {
+shareButton.on("click", function() {
   copyToClipboard();
-  shareButton.text("Copied to Clipboard!")
+  shareButton.text("Copied to Clipboard!");
 });
 
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
   let copyWord = urlGetWord ? urlGetWord : input.val();
   let copyText = "https://stonksify.com/?word=" + copyWord;
-  const fakeInput = document.createElement('textarea');
+  const fakeInput = document.createElement("textarea");
   fakeInput.value = copyText;
   $("body").append(fakeInput);
   fakeInput.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
   document.body.removeChild(fakeInput);
 }
 
@@ -99,8 +99,8 @@ function enterWord(word) {
     console.log("Valid word: " + word);
     let newWerd = stonksify(word);
     drawWordOnCanvas(newWerd);
-    shareButton.prop('disabled', false);
-    shareButton.text("Share")
+    shareButton.prop("disabled", false);
+    shareButton.text("Share");
   }
 }
 
@@ -127,16 +127,16 @@ function validate(word) {
   return true;
 }
 
-function stonksify(word, showAllWords=true) {
+function stonksify(word, showAllWords = true) {
   word = word.toLowerCase();
-  let possibleWords = []
+  let possibleWords = [];
   console.groupCollapsed("Regex Details: " + word);
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
     let replaceWith = stonksifyRules[i][1];
     let newWord = word.replace(toReplace, replaceWith);
     if (possibleWords.indexOf(newWord) === -1) {
-        possibleWords.push(newWord);
+      possibleWords.push(newWord);
     }
     console.log(
       `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
@@ -151,11 +151,13 @@ function stonksify(word, showAllWords=true) {
 }
 
 function displayPossibleWords(possibleWords) {
-    wordList.html("");
-    for (let i = 0; i < possibleWords.length; i++) {
-        let pword = possibleWords[i];
-        wordList.append(`<button onclick="drawWordOnCanvas('${pword}')">` + pword + "</button>");
-    }
+  wordList.html("");
+  for (let i = 0; i < possibleWords.length; i++) {
+    let pword = possibleWords[i];
+    wordList.append(
+      `<button onclick="drawWordOnCanvas('${pword}')">` + pword + "</button>"
+    );
+  }
 }
 
 function testStonksify() {
@@ -180,7 +182,7 @@ function isLocal() {
 }
 
 function addDevModeMessageBox() {
-  $('body').prepend("<p class='alert'>DEVELOPER MODE</p>");
+  $("body").prepend("<p class='alert'>DEVELOPER MODE</p>");
 }
 
 if (devMode) {
