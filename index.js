@@ -73,7 +73,6 @@ shareButton.on("click", function () {
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
   let copyText = "https://stonksify.com/?word=" + urlGetWord || input.val();
-
   const fakeInput = document.createElement('textarea');
   fakeInput.value = copyText;
   $("body").append(fakeInput);
