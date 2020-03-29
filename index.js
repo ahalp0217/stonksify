@@ -14,7 +14,6 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-const imageObj = new Image();
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 10, 10);
 };
