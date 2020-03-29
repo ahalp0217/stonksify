@@ -20,7 +20,7 @@ imageObj.onload = function () {
 imageObj.src = "stonks.jpg";
 
 const vowels = "aeiouy";
-const consonants = "";
+const consonants = "abcdfghjklmnpqrstvwxz";
 // rules have format [regex_to_replace, text_to_insert, priority]
 // rules are executed in a sorted manner by priortiy, then rule regex length
 // default
