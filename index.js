@@ -19,7 +19,7 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-imageObj.onload = function() {
+imageObj.onload = function () {
   ctx.drawImage(imageObj, 10, 10);
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
@@ -79,19 +79,19 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on("keyup", function(e) {
+input.on("keyup", function (e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-submitButton.on("click", function() {
+submitButton.on("click", function () {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function() {
+shareButton.on("click", function () {
   copyToClipboard();
   shareButton.text("Copied to Clipboard!");
 });
@@ -120,18 +120,31 @@ function enterWord(word) {
   }
 }
 
+function getTextXCoordinate(newWerd) {
+  //Calculate proper x coordinate based on text length
+  let xCoordinate = 430;
+  let rightPadding = 20;
+  let difference = canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
+  if (difference < 0) {
+    xCoordinate = xCoordinate + difference - rightPadding;
+  }
+  return xCoordinate;
+}
+
 function drawWordOnCanvas(newWerd) {
   console.log("Start Draw");
   //Clear canvas before drawing new word
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   //Redraw image
   ctx.drawImage(imageObj, 10, 10);
+  //Get x coordinate
+  let xCoordinate = getTextXCoordinate(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
   for (let i = 0; i < 10; i++) {
-    ctx.fillText(newWerd, 430, 350);
+    ctx.fillText(newWerd, xCoordinate, 350);
   }
-  ctx.strokeText(newWerd, 430, 350);
-  ctx.strokeText(newWerd, 430, 350);
+  ctx.strokeText(newWerd, xCoordinate, 350);
+  ctx.strokeText(newWerd, xCoordinate, 350);
   console.log("End Draw");
 }
 
@@ -175,16 +188,16 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-        i === wordsArray.length - 1 ? "selectborder" : ""
+      i === wordsArray.length - 1 ? "selectborder" : ""
       }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
-        pword +
-        "</button>"
+      pword +
+      "</button>"
     );
   }
 }
 
 function clickedPossibleWords(word) {
-  $(".wordoptions").each(function(index) {
+  $(".wordoptions").each(function (index) {
     if ($(this).val() === word) {
       $(this)
         .toggleClass("selectborder")
