@@ -164,7 +164,7 @@ function getStonksifiedWords(word) {
   return allStonksWords;
 }
 
-function getTopStonkifiedWord(words) {
+function getTopStonksifiedWord(words) {
   return Array.from(words).pop();
 }
 
