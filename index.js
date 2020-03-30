@@ -123,10 +123,10 @@ function enterWord(word) {
 function getTextXCoordinate(newWerd) {
   //Calculate proper x coordinate based on text length
   let xCoordinate = 430;
-  let right_padding = 20;
+  let rightPadding = 20;
   let difference = canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
   if (difference < 0) {
-    xCoordinate = xCoordinate + difference - right_padding;
+    xCoordinate = xCoordinate + difference - rightPadding;
   }
   return xCoordinate;
 }
