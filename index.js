@@ -120,18 +120,32 @@ function enterWord(word) {
   }
 }
 
+function sizeText(newWerd) {
+  //Calculate proper x coordinate based on text length
+  var position = 430;
+  var right_padding = 20;
+  var difference = canvas.width - (position + ctx.measureText(newWerd).width);
+  console.log(difference);
+  if (difference < 0) {
+    position = position + difference - right_padding;
+  }
+  return position;
+}
+
 function drawWordOnCanvas(newWerd) {
   console.log("Start Draw");
   //Clear canvas before drawing new word
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   //Redraw image
   ctx.drawImage(imageObj, 10, 10);
+  //Get x coordinate
+  var x_coordinate = sizeText(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
   for (let i = 0; i < 10; i++) {
-    ctx.fillText(newWerd, 430, 350);
+    ctx.fillText(newWerd, x_coordinate, 350);
   }
-  ctx.strokeText(newWerd, 430, 350);
-  ctx.strokeText(newWerd, 430, 350);
+  ctx.strokeText(newWerd, x_coordinate, 350);
+  ctx.strokeText(newWerd, x_coordinate, 350);
   console.log("End Draw");
 }
 
