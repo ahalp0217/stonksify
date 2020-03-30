@@ -2,6 +2,7 @@ const input = $("#word");
 const output = $("#wordstonked");
 const submitButton = $("#submit");
 const shareButton = $("#share");
+const wordList = $("#wordlist");
 const devMode = isLocal();
 
 const url = new URL(window.location.href);
@@ -110,7 +111,9 @@ function copyToClipboard() {
 function enterWord(word) {
   if (validate(word)) {
     console.log("Valid word: " + word);
-    let newWerd = stonksify(word);
+    let werds = getStonksifiedWords(word);
+    let newWerd = getTopStonkifiedWord(werds);
+    displayAllStonksifiedWords(werds)
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
     shareButton.text("Share");
@@ -140,15 +143,17 @@ function validate(word) {
   return true;
 }
 
-function stonksify(word) {
+function getStonksifiedWords(word) {
   word = word.toLowerCase();
+  let allStonksWords = new Set();
   console.groupCollapsed("Regex Details: " + word);
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
     let replaceWith = stonksifyRules[i][1];
     let newWord = word.replace(toReplace, replaceWith);
+    allStonksWords.add(newWord);
     console.log(
-      `Stonksify rule ${i}: replace regexp ${toReplace} + with '${replaceWith}.`
+      `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
     );
     if (newWord != word) {
       console.log(`Rule applied, created werd ${newWord}.`);
@@ -156,13 +161,46 @@ function stonksify(word) {
     word = newWord;
   }
   console.groupEnd();
-  return word;
+  return allStonksWords;
+}
+
+function getTopStonkifiedWord(words) {
+  return Array.from(words).pop();
+}
+
+function displayAllStonksifiedWords(words) {
+  let wordsArray = Array.from(words);
+  wordList.html("");
+  for (let i = 0; i < wordsArray.length; i++) {
+    let pword = wordsArray[i];
+    wordList.append(
+      `<button class="wordoptions ${
+        i === wordsArray.length - 1 ? "selectborder" : ""
+      }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
+        pword +
+        "</button>"
+    );
+  }
+}
+
+function clickedPossibleWords(word) {
+  $(".wordoptions").each(function(index) {
+    if ($(this).val() === word) {
+      $(this)
+        .toggleClass("selectborder")
+        .siblings()
+        .removeClass("selectborder");
+    }
+  });
+  drawWordOnCanvas(word);
 }
 
 function testStonksify() {
   //Imported testWords from words.js
   for (const key of Object.keys(testWords)) {
-    if (stonksify(key) === testWords[key]) {
+    let words = getStonksifiedWords(key);
+    let stonksWord = getTopStonkifiedWord(words);
+    if (stonksWord === testWords[key]) {
       colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
     } else {
       colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red");
