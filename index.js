@@ -112,7 +112,7 @@ function enterWord(word) {
   if (validate(word)) {
     console.log("Valid word: " + word);
     let werds = getStonksifiedWords(word);
-    let newWerd = getTopStonkifiedWord(werds);
+    let newWerd = getTopStonksifiedWord(werds);
     displayAllStonksifiedWords(werds)
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
@@ -199,7 +199,7 @@ function testStonksify() {
   //Imported testWords from words.js
   for (const key of Object.keys(testWords)) {
     let words = getStonksifiedWords(key);
-    let stonksWord = getTopStonkifiedWord(words);
+    let stonksWord = getTopStonksifiedWord(words);
     if (stonksWord === testWords[key]) {
       colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
     } else {
