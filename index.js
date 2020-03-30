@@ -19,7 +19,7 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-imageObj.onload = function() {
+imageObj.onload = function () {
   ctx.drawImage(imageObj, 10, 10);
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
@@ -79,19 +79,19 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on("keyup", function(e) {
+input.on("keyup", function (e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-submitButton.on("click", function() {
+submitButton.on("click", function () {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function() {
+shareButton.on("click", function () {
   copyToClipboard();
   shareButton.text("Copied to Clipboard!");
 });
@@ -189,16 +189,16 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-        i === wordsArray.length - 1 ? "selectborder" : ""
+      i === wordsArray.length - 1 ? "selectborder" : ""
       }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
-        pword +
-        "</button>"
+      pword +
+      "</button>"
     );
   }
 }
 
 function clickedPossibleWords(word) {
-  $(".wordoptions").each(function(index) {
+  $(".wordoptions").each(function (index) {
     if ($(this).val() === word) {
       $(this)
         .toggleClass("selectborder")
