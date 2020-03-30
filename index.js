@@ -120,7 +120,7 @@ function enterWord(word) {
   }
 }
 
-function sizeText(newWerd) {
+function getTextPosition(newWerd) {
   //Calculate proper x coordinate based on text length
   var position = 430;
   var right_padding = 20;
@@ -139,7 +139,7 @@ function drawWordOnCanvas(newWerd) {
   //Redraw image
   ctx.drawImage(imageObj, 10, 10);
   //Get x coordinate
-  var x_coordinate = sizeText(newWerd);
+  var x_coordinate = getTextPosition(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
   for (let i = 0; i < 10; i++) {
     ctx.fillText(newWerd, x_coordinate, 350);
