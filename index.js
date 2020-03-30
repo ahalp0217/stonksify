@@ -120,15 +120,15 @@ function enterWord(word) {
   }
 }
 
-function getTextXPosition(newWerd) {
+function getTextXCoordinate(newWerd) {
   //Calculate proper x coordinate based on text length
-  let position = 430;
+  let xCoordinate = 430;
   let right_padding = 20;
-  let difference = canvas.width - (position + ctx.measureText(newWerd).width);
+  let difference = canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
   if (difference < 0) {
-    position = position + difference - right_padding;
+    xCoordinate = xCoordinate + difference - right_padding;
   }
-  return position;
+  return xCoordinate;
 }
 
 function drawWordOnCanvas(newWerd) {
@@ -138,7 +138,7 @@ function drawWordOnCanvas(newWerd) {
   //Redraw image
   ctx.drawImage(imageObj, 10, 10);
   //Get x coordinate
-  let xCoordinate = getTextXPosition(newWerd);
+  let xCoordinate = getTextXCoordinate(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
   for (let i = 0; i < 10; i++) {
     ctx.fillText(newWerd, xCoordinate, 350);
