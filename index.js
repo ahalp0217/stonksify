@@ -120,12 +120,11 @@ function enterWord(word) {
   }
 }
 
-function getTextPosition(newWerd) {
+function getTextXPosition(newWerd) {
   //Calculate proper x coordinate based on text length
-  var position = 430;
-  var right_padding = 20;
-  var difference = canvas.width - (position + ctx.measureText(newWerd).width);
-  console.log(difference);
+  let position = 430;
+  let right_padding = 20;
+  let difference = canvas.width - (position + ctx.measureText(newWerd).width);
   if (difference < 0) {
     position = position + difference - right_padding;
   }
@@ -139,13 +138,13 @@ function drawWordOnCanvas(newWerd) {
   //Redraw image
   ctx.drawImage(imageObj, 10, 10);
   //Get x coordinate
-  var x_coordinate = getTextPosition(newWerd);
+  let xCoordinate = getTextXPosition(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
   for (let i = 0; i < 10; i++) {
-    ctx.fillText(newWerd, x_coordinate, 350);
+    ctx.fillText(newWerd, xCoordinate, 350);
   }
-  ctx.strokeText(newWerd, x_coordinate, 350);
-  ctx.strokeText(newWerd, x_coordinate, 350);
+  ctx.strokeText(newWerd, xCoordinate, 350);
+  ctx.strokeText(newWerd, xCoordinate, 350);
   console.log("End Draw");
 }
 
