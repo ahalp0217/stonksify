@@ -5,6 +5,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h1 {
+    font-family: "Impact";
+    font-size: 44px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    color: #fff;
+}
+
 .alert {
   padding: 5px;
   background-color: #4BB543; /* Red */
