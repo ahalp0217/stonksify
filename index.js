@@ -127,7 +127,6 @@ function getTextXCoordinate(newWerd) {
   let xCoordinate = 430;
   let rightPadding = 60;
   let difference = canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
-  console.log(difference);
   if (difference < rightPadding) {
     xCoordinate = xCoordinate + difference - rightPadding;
   }
