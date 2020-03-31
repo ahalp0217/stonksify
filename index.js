@@ -108,6 +108,11 @@ function copyToClipboard() {
   document.body.removeChild(fakeInput);
 }
 
+function updateUrlParamaters(url, newWerd) {
+  //Update URL on submit with word
+
+}
+
 function enterWord(word) {
   if (validate(word)) {
     console.log("Valid word: " + word);
@@ -117,6 +122,8 @@ function enterWord(word) {
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
     shareButton.text("Share");
+    //This URL parameter update will fail unless running on a server
+    history.pushState(null, "", "/?word=" + input.val());
   }
 }
 
