@@ -24,6 +24,7 @@ imageObj.onload = function () {
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
     enterWord(urlGetWord);
+    input.val(urlGetWord);
   }
 };
 imageObj.src = "stonks.jpg";
