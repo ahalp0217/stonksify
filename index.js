@@ -118,6 +118,8 @@ function enterWord(word) {
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
     shareButton.text("Share");
+    //This URL parameter update will fail unless running on a server
+    history.pushState(null, "", "/?word=" + input.val());
   }
 }
 
