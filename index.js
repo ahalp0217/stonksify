@@ -108,11 +108,6 @@ function copyToClipboard() {
   document.body.removeChild(fakeInput);
 }
 
-function updateUrlParamaters(url, newWerd) {
-  //Update URL on submit with word
-
-}
-
 function enterWord(word) {
   if (validate(word)) {
     console.log("Valid word: " + word);
