@@ -125,9 +125,10 @@ function enterWord(word) {
 function getTextXCoordinate(newWerd) {
   //Calculate proper x coordinate based on text length
   let xCoordinate = 430;
-  let rightPadding = 20;
+  let rightPadding = 60;
   let difference = canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
-  if (difference < 20) {
+  console.log(difference);
+  if (difference < rightPadding) {
     xCoordinate = xCoordinate + difference - rightPadding;
   }
   return xCoordinate;
