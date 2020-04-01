@@ -192,16 +192,13 @@ function getStonksifiedWords(s) {
     for (let ii = 0; ii < wordsList.length; ii++) {
       // apply rule to word at ii
       let newWord = wordsList[ii].replace(toReplace, replaceWith);
-
+      wordsList[ii] = newWord;
       console.log(
         `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
       );
       if (newWord != wordsList[ii]) {
         console.log(`Rule applied, created werd ${newWord}.`);
       }
-
-      // update word at ii
-      wordsList[ii] = newWord;
     }
 
     // add stonkified word to list of combinations to return
