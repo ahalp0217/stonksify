@@ -124,6 +124,7 @@ downloadButton.on("click", function () {
 });
 
 function getURLWord() {
+  let url = new URL(window.location.href);
   return url.searchParams.get("word");
 }
 
