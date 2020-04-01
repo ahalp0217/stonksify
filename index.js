@@ -245,7 +245,7 @@ function displayAllStonksifiedWords(words) {
     wordList.append(
       `<button class="wordoptions ${
       i === wordsArray.length - 1 ? "selectedword" : ""
-      }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
+      }" onclick="clickedPossibleWords('${pword}')">` +
         pword +
         "</button>"
     );
@@ -258,7 +258,7 @@ function getDisplayedWord() {
 
 function clickedPossibleWords(word) {
   $(".wordoptions").each(function(index) {
-    if ($(this).val() === word) {
+    if ($(this).text() === word) {
       $(this)
         .toggleClass("selectedword")
         .siblings()
