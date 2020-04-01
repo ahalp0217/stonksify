@@ -187,6 +187,7 @@ function validate(word) {
   if (word.length > maxWordLength) {
     alert(`Max entry is ${maxWordLength} characters.`);
     return false;
+  }
   if (!word) {
     alert("Please enter a valid word");
     return false;
@@ -198,13 +199,10 @@ function getStonksifiedWords(s) {
   // allstonkswords is the set of final stonkified permutations to be returned
   let allStonksWords = new Set();
   let sLower = s.toLowerCase();
-
   let wordsList = sLower.split(" ");
-
   console.groupCollapsed("Regex Details: " + sLower);
-
+  
   allStonksWords.add(wordsList.join(" "));
-
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
     let replaceWith = stonksifyRules[i][1];
