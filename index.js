@@ -111,7 +111,7 @@ downloadButton.on("click", function () {
     link.click();
     downloadButton.text("Downloaded!");
   }
-  catch{
+  catch {
     console.log("Unable to download image :(")
   }
 });
@@ -143,7 +143,7 @@ function enterWord(word) {
     try {
       history.pushState(null, "", "/?word=" + input.val());
     }
-    catch (err) {
+    catch {
       console.log("URL parameter not generated")
     }
   }
