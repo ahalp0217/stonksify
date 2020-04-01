@@ -166,7 +166,7 @@ function drawWordOnCanvas(newWerd) {
 }
 
 function validate(word) {
-  if (word.indexOf(" ") >= 0) {
+  if (!word || word.indexOf(" ") >= 0) {
     alert("Please enter a valid word");
     return false;
   }
