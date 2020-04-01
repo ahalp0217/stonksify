@@ -112,7 +112,7 @@ downloadButton.on("click", function () {
     downloadButton.text("Downloaded!");
   }
   catch {
-    console.log("Unable to download image :(")
+    console.log("Image can't be downloaded unless running on a server.")
   }
 });
 
@@ -139,12 +139,11 @@ function enterWord(word) {
     shareButton.text("Share Link");
     downloadButton.prop("disabled", false);
     downloadButton.text("Download Image");
-    //This URL parameter update will fail unless running on a server
     try {
       history.pushState(null, "", "/?word=" + input.val());
     }
     catch {
-      console.log("URL parameter not generated")
+      console.log("URL parameter can't be generated unless running on a server.")
     }
   }
 }
