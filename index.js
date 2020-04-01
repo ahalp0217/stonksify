@@ -125,7 +125,7 @@ downloadButton.on("click", function () {
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
   let copyWord = urlGetWord ? urlGetWord : input.val();
-  let copyText = "https://stonksify.com/?word=" + copyWord;
+  let copyText = "https://stonksify.com/?word=" + encodeURI(copyWord);
   const fakeInput = document.createElement("textarea");
   fakeInput.value = copyText;
   $("body").append(fakeInput);
