@@ -20,11 +20,13 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
+//https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
 imageObj.crossOrigin = "anonymous"
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
+    //input.val goes before enterWord to generate correct URL with params in address bar
     input.val(urlGetWord);
     enterWord(urlGetWord);
   }
@@ -101,7 +103,7 @@ shareButton.on("click", function () {
 
 downloadButton.on("click", function () {
   let link = document.createElement('a');
-  link.download = 'stonks.png';
+  link.download = getDisplayedWord() + '.png';
   link.href = canvas.toDataURL()
   link.click();
   downloadButton.text("Downloaded!");
@@ -131,7 +133,6 @@ function enterWord(word) {
     downloadButton.prop("disabled", false);
     downloadButton.text("Download Image");
     //This URL parameter update will fail unless running on a server
-    //ISSUE: Back button doesn't actually work on the page because of this
     history.pushState(null, "", "/?word=" + input.val());
   }
 }
@@ -204,7 +205,7 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-      i === wordsArray.length - 1 ? "selectborder" : ""
+      i === wordsArray.length - 1 ? "selectedword" : ""
       }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
       pword +
       "</button>"
@@ -212,13 +213,17 @@ function displayAllStonksifiedWords(words) {
   }
 }
 
+function getDisplayedWord() {
+  return $(".selectedword").val();
+}
+
 function clickedPossibleWords(word) {
   $(".wordoptions").each(function (index) {
     if ($(this).val() === word) {
       $(this)
-        .toggleClass("selectborder")
+        .toggleClass("selectedword")
         .siblings()
-        .removeClass("selectborder");
+        .removeClass("selectedword");
     }
   });
   drawWordOnCanvas(word);
