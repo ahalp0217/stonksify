@@ -20,8 +20,10 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-//https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
-imageObj.crossOrigin = "anonymous"
+if (!devMode) {
+  //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
+  imageObj.crossOrigin = "anonymous"
+}
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
@@ -104,9 +106,14 @@ shareButton.on("click", function () {
 downloadButton.on("click", function () {
   let link = document.createElement('a');
   link.download = getDisplayedWord() + '.png';
-  link.href = canvas.toDataURL()
-  link.click();
-  downloadButton.text("Downloaded!");
+  try {
+    link.href = canvas.toDataURL()
+    link.click();
+    downloadButton.text("Downloaded!");
+  }
+  catch{
+    console.log("Unable to download image :(")
+  }
 });
 
 function copyToClipboard() {
@@ -133,7 +140,12 @@ function enterWord(word) {
     downloadButton.prop("disabled", false);
     downloadButton.text("Download Image");
     //This URL parameter update will fail unless running on a server
-    history.pushState(null, "", "/?word=" + input.val());
+    try {
+      history.pushState(null, "", "/?word=" + input.val());
+    }
+    catch (err) {
+      console.log("URL parameter not generated")
+    }
   }
 }
 
