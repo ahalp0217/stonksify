@@ -167,25 +167,18 @@ function validate(word) {
 }
 
 function getStonksifiedWords(s) {
-  // initialize set of stonkified words
+  // allstonkswords is the set of final stonkified permutations to be returned
   let allStonksWords = new Set();
-
-  // lowercase input
   let sLower = s.toLowerCase();
 
-  // split to list of words to stonkify
   let wordsList = sLower.split(" ");
 
   console.groupCollapsed("Regex Details: " + sLower);
 
-  // add original string to list of stonkified words
   allStonksWords.add(wordsList.join(" "));
 
-  // for each rule
   for (let i = 0; i < stonksifyRules.length; i++) {
-    // rule to match on
     let toReplace = new RegExp(stonksifyRules[i][0]);
-    // string to replace match with
     let replaceWith = stonksifyRules[i][1];
 
     // for each word in the string to be stonked
