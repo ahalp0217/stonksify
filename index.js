@@ -2,6 +2,7 @@ const input = $("#word");
 const output = $("#wordstonked");
 const submitButton = $("#submit");
 const shareButton = $("#share");
+const downloadButton = $("#download");
 const wordList = $("#wordlist");
 const devMode = isLocal();
 
@@ -19,12 +20,15 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
+//https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
+imageObj.crossOrigin = "anonymous"
 imageObj.onload = function () {
-  ctx.drawImage(imageObj, 10, 10);
+  ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
-    enterWord(urlGetWord);
+    //input.val goes before enterWord to generate correct URL with params in address bar
     input.val(urlGetWord);
+    enterWord(urlGetWord);
   }
 };
 imageObj.src = "stonks.jpg";
@@ -97,6 +101,14 @@ shareButton.on("click", function () {
   shareButton.text("Copied to Clipboard!");
 });
 
+downloadButton.on("click", function () {
+  let link = document.createElement('a');
+  link.download = getDisplayedWord() + '.png';
+  link.href = canvas.toDataURL()
+  link.click();
+  downloadButton.text("Downloaded!");
+});
+
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
   let copyWord = urlGetWord ? urlGetWord : input.val();
@@ -117,7 +129,9 @@ function enterWord(word) {
     displayAllStonksifiedWords(werds)
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
-    shareButton.text("Share");
+    shareButton.text("Share Link");
+    downloadButton.prop("disabled", false);
+    downloadButton.text("Download Image");
     //This URL parameter update will fail unless running on a server
     history.pushState(null, "", "/?word=" + input.val());
   }
@@ -139,7 +153,7 @@ function drawWordOnCanvas(newWerd) {
   //Clear canvas before drawing new word
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   //Redraw image
-  ctx.drawImage(imageObj, 10, 10);
+  ctx.drawImage(imageObj, 0, 0);
   //Get x coordinate
   let xCoordinate = getTextXCoordinate(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
@@ -191,7 +205,7 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-      i === wordsArray.length - 1 ? "selectborder" : ""
+      i === wordsArray.length - 1 ? "selectedword" : ""
       }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
       pword +
       "</button>"
@@ -199,13 +213,17 @@ function displayAllStonksifiedWords(words) {
   }
 }
 
+function getDisplayedWord() {
+  return $(".selectedword").val();
+}
+
 function clickedPossibleWords(word) {
   $(".wordoptions").each(function (index) {
     if ($(this).val() === word) {
       $(this)
-        .toggleClass("selectborder")
+        .toggleClass("selectedword")
         .siblings()
-        .removeClass("selectborder");
+        .removeClass("selectedword");
     }
   });
   drawWordOnCanvas(word);
