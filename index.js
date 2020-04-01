@@ -112,7 +112,7 @@ downloadButton.on("click", function () {
     downloadButton.text("Downloaded!");
   }
   catch {
-    console.log("Image can't be downloaded unless running on a server.")
+    console.log("Image can't be downloaded unless running on a server. Try \"python -m SimpleHTTPServer 8000\"")
   }
 });
 
@@ -143,7 +143,7 @@ function enterWord(word) {
       history.pushState(null, "", "/?word=" + input.val());
     }
     catch {
-      console.log("URL parameter can't be generated unless running on a server.")
+      console.log("URL parameter can't be generated unless running on a server. Try \"python -m SimpleHTTPServer 8000\"")
     }
   }
 }
