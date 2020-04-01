@@ -7,7 +7,6 @@ const wordList = $("#wordlist");
 const devMode = isLocal();
 
 const url = new URL(window.location.href);
-const urlGetWord = url.searchParams.get("word");
 
 const maxWordLength = 22;
 
@@ -29,10 +28,12 @@ if (!devMode) {
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
-  if (urlGetWord) {
+
+  let urlWord = getURLWord()
+  if (urlWord) {
     //input.val goes before enterWord to generate correct URL with params in address bar
-    input.val(urlGetWord);
-    enterWord(urlGetWord);
+    input.val(urlWord);
+    enterWord(urlWord);
   }
 };
 imageObj.src = "stonks.jpg";
@@ -122,9 +123,14 @@ downloadButton.on("click", function () {
   }
 });
 
+function getURLWord() {
+  return url.searchParams.get("word");
+}
+
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
-  let copyWord = urlGetWord ? urlGetWord : input.val();
+  let urlWord = getURLWord()
+  let copyWord = urlWord ? urlWord : input.val();
   let copyText = "https://stonksify.com/?word=" + encodeURI(copyWord);
   const fakeInput = document.createElement("textarea");
   fakeInput.value = copyText;
