@@ -171,7 +171,7 @@ function getStonksifiedWords(s) {
   let allStonksWords = new Set();
 
   // lowercase input
-  sLower = s.toLowerCase();
+  let sLower = s.toLowerCase();
 
   // split to list of words to stonkify
   let wordsList = sLower.split(" ");
@@ -193,7 +193,6 @@ function getStonksifiedWords(s) {
       // apply rule to word at ii
       let newWord = wordsList[ii].replace(toReplace, replaceWith);
 
-      // logging
       console.log(
         `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
       );
