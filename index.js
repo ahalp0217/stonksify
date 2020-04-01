@@ -6,8 +6,6 @@ const downloadButton = $("#download");
 const wordList = $("#wordlist");
 const devMode = isLocal();
 
-const url = new URL(window.location.href);
-
 const maxWordLength = 22;
 
 //Canvas Settings
@@ -124,6 +122,7 @@ downloadButton.on("click", function () {
 });
 
 function getURLWord() {
+  let url = new URL(window.location.href);
   return url.searchParams.get("word");
 }
 
