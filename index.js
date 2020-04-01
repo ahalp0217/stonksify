@@ -93,19 +93,19 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on("keyup", function(e) {
+input.on("keyup", function (e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-submitButton.on("click", function() {
+submitButton.on("click", function () {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function() {
+shareButton.on("click", function () {
   copyToClipboard();
   shareButton.text("Copied to Clipboard!");
 });
@@ -207,7 +207,7 @@ function getStonksifiedWords(s) {
   let sLower = s.toLowerCase();
   let wordsList = sLower.split(" ");
   console.groupCollapsed("Regex Details: " + sLower);
-  
+
   allStonksWords.add(wordsList.join(" "));
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
@@ -246,18 +246,18 @@ function displayAllStonksifiedWords(words) {
       `<button class="wordoptions ${
       i === wordsArray.length - 1 ? "selectedword" : ""
       }" onclick="clickedPossibleWords('${pword}')">` +
-        pword +
-        "</button>"
+      pword +
+      "</button>"
     );
   }
 }
 
 function getDisplayedWord() {
-  return $(".selectedword").val();
+  return $(".selectedword").text();
 }
 
 function clickedPossibleWords(word) {
-  $(".wordoptions").each(function(index) {
+  $(".wordoptions").each(function (index) {
     if ($(this).text() === word) {
       $(this)
         .toggleClass("selectedword")
