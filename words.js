@@ -13,5 +13,6 @@ const testWords = {
   math: "meth",
   thick: "thicc",
   dick: "dicc",
-  action: "aktion"
+  action: "aktion",
+  word: "werd"
 };

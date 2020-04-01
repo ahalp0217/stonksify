@@ -8,6 +8,8 @@ const devMode = isLocal();
 const url = new URL(window.location.href);
 const urlGetWord = url.searchParams.get("word");
 
+const maxWordLength = 22;
+
 //Canvas Settings
 const canvas = document.getElementById("stonkscanvas");
 const ctx = canvas.getContext("2d");
@@ -19,7 +21,7 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
-imageObj.onload = function () {
+imageObj.onload = function() {
   ctx.drawImage(imageObj, 10, 10);
   //Need to add word only after the image is loaded, otherwise no image will appear
   if (urlGetWord) {
@@ -39,8 +41,12 @@ let rules = [
   ["moon", "mun", 1000],
   // jackson -> jonkson
   ["jack", "jonk", 1000],
+  // fuck -> frick
+  ["fuck", "frick", 1000],
   // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
+  // word -> werd
+  ["^wo([^e])", "we$1", 1],
   // stock -> stonk, but note e missing to exclude not funny examples like section -> sention
   ["([^^][aouy])(c)", "$1n", 1],
   // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
@@ -67,7 +73,7 @@ let rules = [
   ["ac", "ak", 1]
 ];
 
-// sorts rules to conform to above comment order. Priority and then rule regex length
+// sorts rules to conform to above comment order. Priority and then rule regex length desc
 const stonksifyRules = rules.sort(function compare(a, b) {
   // sort by priority
   if (a[2] > b[2]) return -1;
@@ -80,19 +86,19 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on("keyup", function (e) {
+input.on("keyup", function(e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-submitButton.on("click", function () {
+submitButton.on("click", function() {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function () {
+shareButton.on("click", function() {
   copyToClipboard();
   shareButton.text("Copied to Clipboard!");
 });
@@ -114,7 +120,7 @@ function enterWord(word) {
     console.log("Valid word: " + word);
     let werds = getStonksifiedWords(word);
     let newWerd = getTopStonksifiedWord(werds);
-    displayAllStonksifiedWords(werds)
+    displayAllStonksifiedWords(werds);
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
     shareButton.text("Share");
@@ -127,7 +133,8 @@ function getTextXCoordinate(newWerd) {
   //Calculate proper x coordinate based on text length
   let xCoordinate = 430;
   let rightPadding = 60;
-  let difference = canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
+  let difference =
+    canvas.width - (xCoordinate + ctx.measureText(newWerd).width);
   if (difference < rightPadding) {
     xCoordinate = xCoordinate + difference - rightPadding;
   }
@@ -152,29 +159,39 @@ function drawWordOnCanvas(newWerd) {
 }
 
 function validate(word) {
-  if (word.indexOf(" ") >= 0) {
-    alert("Please enter a valid word");
+  if (word.length > maxWordLength) {
+    //TODO find reasonable string limit
+    alert(`Max entry is ${maxWordLength} characters.`);
     return false;
   }
   return true;
 }
 
-function getStonksifiedWords(word) {
-  word = word.toLowerCase();
+function getStonksifiedWords(s) {
   let allStonksWords = new Set();
-  console.groupCollapsed("Regex Details: " + word);
+
+  sLower = s.toLowerCase();
+  let wordsList = sLower.split(" ");
+
+  console.groupCollapsed("Regex Details: " + sLower);
+
+  allStonksWords.add(wordsList.join(" "));
+
   for (let i = 0; i < stonksifyRules.length; i++) {
     let toReplace = new RegExp(stonksifyRules[i][0]);
     let replaceWith = stonksifyRules[i][1];
-    let newWord = word.replace(toReplace, replaceWith);
-    allStonksWords.add(newWord);
-    console.log(
-      `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
-    );
-    if (newWord != word) {
-      console.log(`Rule applied, created werd ${newWord}.`);
+
+    for (let ii = 0; ii < wordsList.length; ii++) {
+      let newWord = wordsList[ii].replace(toReplace, replaceWith);
+      console.log(
+        `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
+      );
+      if (newWord != wordsList[ii]) {
+        console.log(`Rule applied, created werd ${newWord}.`);
+      }
+      wordsList[ii] = newWord;
     }
-    word = newWord;
+    allStonksWords.add(wordsList.join(" "));
   }
   console.groupEnd();
   return allStonksWords;
@@ -191,16 +208,16 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-      i === wordsArray.length - 1 ? "selectborder" : ""
+        i === wordsArray.length - 1 ? "selectborder" : ""
       }" value=${pword} onclick="clickedPossibleWords('${pword}')">` +
-      pword +
-      "</button>"
+        pword +
+        "</button>"
     );
   }
 }
 
 function clickedPossibleWords(word) {
-  $(".wordoptions").each(function (index) {
+  $(".wordoptions").each(function(index) {
     if ($(this).val() === word) {
       $(this)
         .toggleClass("selectborder")
