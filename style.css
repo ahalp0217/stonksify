@@ -6,21 +6,25 @@ body {
 }
 
 h1 {
-    font-family: "Impact";
-    font-size: 44px;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
-    color: #fff;
+  font-family: "Impact";
+  font-size: 44px;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  color: #fff;
+}
+
+#stonkscanvas {
+  margin-top: 15px;
 }
 
 .alert {
   padding: 5px;
-  background-color: #4BB543; /* Red */
+  background-color: #4bb543; /* Red */
   color: white;
   margin-top: 0px;
   margin-bottom: 15px;
 }
 
-.selectborder {
-   border: 2px solid #3399ff
+.selectedword {
+  border: 2px solid #3399ff;
 }
