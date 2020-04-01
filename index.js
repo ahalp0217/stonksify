@@ -160,7 +160,6 @@ function drawWordOnCanvas(newWerd) {
 
 function validate(word) {
   if (word.length > maxWordLength) {
-    //TODO find reasonable string limit
     alert(`Max entry is ${maxWordLength} characters.`);
     return false;
   }
