@@ -21,13 +21,13 @@ ctx.strokeStyle = "#000";
 const imageObj = new Image();
 if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
-  imageObj.crossOrigin = "anonymous"
+  imageObj.crossOrigin = "anonymous";
 }
-imageObj.onload = function () {
+imageObj.onload = function() {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
 
-  let urlWord = getURLWord()
+  let urlWord = getURLWord();
   if (urlWord) {
     //input.val goes before enterWord to generate correct URL with params in address bar
     input.val(urlWord);
@@ -91,33 +91,48 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on("keyup", function (e) {
+input.on("keyup", function(e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-submitButton.on("click", function () {
+submitButton.on("click", function() {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function () {
+shareButton.on("click", function() {
   copyToClipboard();
-  shareButton.text("Copied to Clipboard!");
+  // adds a span to display "Link Copied"
+  // then, styles the text above the input field's position and animates the text to float upward before removing from the dom
+  input.after('<span id="copied_popup">Link Copied!</span>');
+  let copiedTop = input.offset().top - input.height() - 5;
+  let copiedLeft = input.offset().left + 40;
+  let copiedPopup = $("#copied_popup")
+    .offset({
+      top: copiedTop,
+      left: copiedLeft
+    })
+    .animate({ top: "-=15" }, 400, "swing");
+
+  setTimeout(function() {
+    copiedPopup.remove();
+  }, 1000);
 });
 
-downloadButton.on("click", function () {
-  let link = document.createElement('a');
-  link.download = getDisplayedWord() + '.png';
+downloadButton.on("click", function() {
+  let link = document.createElement("a");
+  link.download = getDisplayedWord() + ".png";
   try {
-    link.href = canvas.toDataURL()
+    link.href = canvas.toDataURL();
     link.click();
     downloadButton.text("Downloaded!");
-  }
-  catch {
-    console.log("Image can't be downloaded unless running on a server. Try \"python -m SimpleHTTPServer 8000\"")
+  } catch {
+    console.log(
+      'Image can\'t be downloaded unless running on a server. Try "python -m SimpleHTTPServer 8000"'
+    );
   }
 });
 
@@ -128,7 +143,7 @@ function getURLWord() {
 
 function copyToClipboard() {
   //https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
-  let urlWord = getURLWord()
+  let urlWord = getURLWord();
   let copyWord = urlWord ? urlWord : input.val();
   let copyText = "https://stonksify.com/?word=" + encodeURI(copyWord);
   const fakeInput = document.createElement("textarea");
@@ -152,9 +167,10 @@ function enterWord(word) {
     downloadButton.text("Download Image");
     try {
       history.pushState(null, "", "/?word=" + input.val());
-    }
-    catch {
-      console.log("URL parameter can't be generated unless running on a server. Try \"python -m SimpleHTTPServer 8000\"")
+    } catch {
+      console.log(
+        'URL parameter can\'t be generated unless running on a server. Try "python -m SimpleHTTPServer 8000"'
+      );
     }
   }
 }
@@ -243,10 +259,10 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-      i === wordsArray.length - 1 ? "selectedword" : ""
+        i === wordsArray.length - 1 ? "selectedword" : ""
       }" onclick="clickedPossibleWords('${pword}')">` +
-      pword +
-      "</button>"
+        pword +
+        "</button>"
     );
   }
 }
@@ -256,7 +272,7 @@ function getDisplayedWord() {
 }
 
 function clickedPossibleWords(word) {
-  $(".wordoptions").each(function (index) {
+  $(".wordoptions").each(function(index) {
     if ($(this).text() === word) {
       $(this)
         .toggleClass("selectedword")
