@@ -110,23 +110,15 @@ shareButton.on("click", function() {
   input.after('<span id="copied_popup">Link Copied!</span>');
   let copiedTop = input.offset().top - input.height() - 5;
   let copiedLeft = input.offset().left + 40;
-  $("#copied_popup")
-    .css("position", "absolute")
-    .css("display", "inline")
-    .css("padding", "0")
-    .css("margin", "0")
-    .css("color", "red")
+  let copiedPopup = $("#copied_popup")
     .offset({
       top: copiedTop,
       left: copiedLeft
     })
     .animate({ top: "-=15" }, 400, "swing");
 
-  let copiedPopup = $("#copied_popup");
-
   setTimeout(function() {
     copiedPopup.remove();
-    console.log(copiedLeft);
   }, 1000);
 });
 
