@@ -18,12 +18,6 @@ h1 {
   width: 666px;
 }
 
-@media only screen and (max-width: 768px) {
-  #stonkscanvas {
-    width: 80%;
-  }
-}
-
 #copied_popup {
   position: absolute;
   display: inline;
@@ -56,10 +50,13 @@ h1 {
   justify-content: center;
 }
 
-input {
+#word {
+  box-sizing: border-box;  /* Prevent box increasing from padding */
   vertical-align: middle;
   margin: 5px 10px 5px 0;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -104,7 +101,7 @@ input {
 }
 
 #submit:hover {
-  transform: scale(1.3);
+  transform: scale(1.1);
 }
 
 #share:enabled {
@@ -144,4 +141,17 @@ input {
   border: 2px solid #348ac7;
   border-radius: 16px;
   outline: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  #word {
+    margin: auto;
+    width: 95%;
+  } 
+  #stonkscanvas {
+    width: 95%;
+  }
+  #submit {
+    width: 95%;
+  }
 }
