@@ -23,7 +23,7 @@ if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
 }
-imageObj.onload = function() {
+imageObj.onload = function () {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
 
@@ -91,25 +91,25 @@ const stonksifyRules = rules.sort(function compare(a, b) {
   }
 });
 
-input.on("keyup", function(e) {
+input.on("keyup", function (e) {
   if (e.which === 13) {
     console.log("Hit Enter");
     enterWord(input.val());
   }
 });
 
-submitButton.on("click", function() {
+submitButton.on("click", function () {
   console.log("Clicked Submit");
   enterWord(input.val());
 });
 
-shareButton.on("click", function() {
+shareButton.on("click", function () {
   copyToClipboard();
   // adds a span to display "Link Copied"
   // then, styles the text above the input field's position and animates the text to float upward before removing from the dom
-  input.after('<span id="copied_popup">Link Copied!</span>');
-  let copiedTop = input.offset().top - input.height() - 5;
-  let copiedLeft = input.offset().left + 40;
+  shareButton.after('<span id="copied_popup">Link Copied!</span>');
+  let copiedLeft = shareButton.offset().left - 100;
+  let copiedTop = shareButton.offset().top + 30
   let copiedPopup = $("#copied_popup")
     .offset({
       top: copiedTop,
@@ -117,12 +117,14 @@ shareButton.on("click", function() {
     })
     .animate({ top: "-=15" }, 400, "swing");
 
-  setTimeout(function() {
-    copiedPopup.remove();
+  setTimeout(function () {
+    copiedPopup.fadeOut(300, function () {
+      $(this).remove();
+    })
   }, 1000);
 });
 
-downloadButton.on("click", function() {
+downloadButton.on("click", function () {
   let link = document.createElement("a");
   link.download = getDisplayedWord() + ".png";
   try {
@@ -162,9 +164,9 @@ function enterWord(word) {
     displayAllStonksifiedWords(werds);
     drawWordOnCanvas(newWerd);
     shareButton.prop("disabled", false);
-    shareButton.text("Share Link");
+    shareButton.text("Share");
     downloadButton.prop("disabled", false);
-    downloadButton.text("Download Image");
+    downloadButton.text("Download");
     try {
       history.pushState(null, "", "/?word=" + input.val());
     } catch {
@@ -259,10 +261,10 @@ function displayAllStonksifiedWords(words) {
     let pword = wordsArray[i];
     wordList.append(
       `<button class="wordoptions ${
-        i === wordsArray.length - 1 ? "selectedword" : ""
+      i === wordsArray.length - 1 ? "selectedword" : ""
       }" onclick="clickedPossibleWords('${pword}')">` +
-        pword +
-        "</button>"
+      pword +
+      "</button>"
     );
   }
 }
@@ -272,7 +274,7 @@ function getDisplayedWord() {
 }
 
 function clickedPossibleWords(word) {
-  $(".wordoptions").each(function(index) {
+  $(".wordoptions").each(function (index) {
     if ($(this).text() === word) {
       $(this)
         .toggleClass("selectedword")
