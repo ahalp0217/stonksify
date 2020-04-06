@@ -20,5 +20,6 @@ const testWords = {
   simpson: "sompson",
   poker: "ponker",
   think: "thonk",
-  frog: "freg"
+  frog: "freg",
+  fame: "feim"
 };
