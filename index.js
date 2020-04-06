@@ -240,7 +240,7 @@ function getStonksifiedWords(s) {
     // for each word in the string to be stonked
     for (let j = 0; j < wordsList.length; j++) {
       let originalWord = wordsList[j];
-      if (originalWord in hardCodedDictionary && !devMode) { //Only run this on prod, need to run test cases locally without hardcoded lookup to see if regex working
+      if (!lockedWords[j] && !devMode && originalWord in hardCodedDictionary) { //Only run this on prod, need to run test cases locally without hardcoded lookup to see if regex working
         let hardCodedValue = hardCodedDictionary[originalWord];
         wordsList[j] = hardCodedValue;
         console.log(`Hardcoded match found! Replacing ${originalWord} with ${hardCodedValue}`);
