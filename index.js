@@ -30,8 +30,7 @@ if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
   //No console statements on production
-  //https://stackoverflow.com/questions/7042611/override-console-log-for-production
-  let console = {};
+  //https://stackoverflow.com/questions/1215392/how-to-quickly-and-conveniently-disable-all-console-log-statements-in-my-code
   console.log = function () { };
   console.groupCollapsed = function () { };
   console.groupEnd = function () { };
@@ -66,7 +65,9 @@ let rules = [
   // great -> gret
   ["great", "gret", 1000],
   // fame -> feim
-  ["([a-z]+)(ame)", "$1eim", 2],
+  ["([a-z]+)(ame)", "$1aym", 2],
+  // build -> bild
+  ["([" + consonants + "])(uil)", "$1il", 2],
   // house -> haus
   ["ouse$", "aus", 2],
   // tech -> tehc

@@ -24,6 +24,7 @@ h2 {
 
 #stonkscanvas {
   margin-top: 15px;
+  margin-bottom: 15px;
   width: 666px;
 }
 
@@ -32,7 +33,7 @@ h2 {
   display: inline;
   padding: 0;
   margin: 0;
-  color:  #348ac7;
+  color: #348ac7;
 }
 
 .alert {
@@ -60,7 +61,7 @@ h2 {
 }
 
 #word {
-  box-sizing: border-box;  /* Prevent box increasing from padding */
+  box-sizing: border-box; /* Prevent box increasing from padding */
   vertical-align: middle;
   margin: 5px 10px 5px 0;
   padding-top: 10px;
@@ -88,26 +89,26 @@ h2 {
 }
 
 #submit {
-  background: linear-gradient(to right, #7474BF 0%, #348AC7 100%, #7474BF 100%);
-  box-shadow: 0 3px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  background: linear-gradient(to right, #7474bf 0%, #348ac7 100%, #7474bf 100%);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   color: #fff;
 }
 
 #share {
-  background: linear-gradient(to right, #7474BF 0%, #348AC7 100%, #7474BF 100%);
+  background: linear-gradient(to right, #7474bf 0%, #348ac7 100%, #7474bf 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   box-shadow: 0px 3px 2px #ddd;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #download {
-  background: linear-gradient(to right, #7474BF 0%, #348AC7 100%, #7474BF 100%);
+  background: linear-gradient(to right, #7474bf 0%, #348ac7 100%, #7474bf 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   box-shadow: 1px 3px 2px #ddd;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #submit:hover {
@@ -137,13 +138,13 @@ h2 {
   border-radius: 16px;
   font-weight: 800;
   margin: 5px;
-  background: linear-gradient(to right, #7474BF 0%, #348AC7 100%, #7474BF 100%);
+  background: linear-gradient(to right, #7474bf 0%, #348ac7 100%, #7474bf 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   box-shadow: 1px 3px 2px #ddd;
 }
 
-.wordoptions { 
+.wordoptions {
   cursor: pointer;
 }
 
@@ -157,7 +158,7 @@ h2 {
   #word {
     margin: auto;
     width: 95%;
-  } 
+  }
   #stonkscanvas {
     width: 95%;
   }
