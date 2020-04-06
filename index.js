@@ -59,6 +59,8 @@ let rules = [
   ["huge", "yuge", 1000],
   // fame -> feim
   ["ame$", "eim", 2],
+  // house -> haus
+  ["ouse$", "aus", 2],
   // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
   // word -> werd

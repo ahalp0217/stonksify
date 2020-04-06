@@ -21,5 +21,6 @@ const testWords = {
   poker: "ponker",
   think: "thonk",
   frog: "freg",
-  fame: "feim"
+  fame: "feim",
+  house: "haus"
 };
