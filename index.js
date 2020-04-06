@@ -22,7 +22,13 @@ const imageObj = new Image();
 if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
+  //No console statements on production
+  var console = {};
+  console.log = function () { };
+  console.groupCollapsed = function () { };
+  console.groupEnd = function () { };
 }
+
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
@@ -48,6 +54,8 @@ let rules = [
   ["jack", "jonk", 1000],
   // fuck -> frick
   ["fuck", "frick", 1000],
+  // huge -> yuge
+  ["huge", "yuge", 1000],
   // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
   // word -> werd
