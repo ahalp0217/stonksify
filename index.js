@@ -5,8 +5,13 @@ const shareButton = $("#share");
 const downloadButton = $("#download");
 const wordList = $("#wordlist");
 const devMode = isLocal();
-
 const maxWordLength = 22;
+
+if (devMode) {
+  console.log(`
+  █▀ ▀█▀ █▀█ █▄░█ █▄▀ █▀ █ █▀▀ █▄█
+  ▄█ ░█░ █▄█ █░▀█ █░█ ▄█ █ █▀░ ░█░`)
+}
 
 //Canvas Settings
 const canvas = document.getElementById("stonkscanvas");
