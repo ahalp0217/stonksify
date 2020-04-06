@@ -23,7 +23,8 @@ if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
   //No console statements on production
-  var console = {};
+  //https://stackoverflow.com/questions/7042611/override-console-log-for-production
+  let console = {};
   console.log = function () { };
   console.groupCollapsed = function () { };
   console.groupEnd = function () { };
