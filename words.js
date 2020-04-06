@@ -15,6 +15,7 @@ const testWords = {
   dick: "dicc",
   action: "aktion",
   word: "werd",
+  huge: "yuge",
   drunk: "dronk",
   simpson: "sompson"
 };
