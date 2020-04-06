@@ -7,7 +7,7 @@ const wordList = $("#wordlist");
 const devMode = isLocal();
 const maxWordLength = 22;
 
-if (devMode) {
+if (!devMode) {
   console.log(`
   █▀ ▀█▀ █▀█ █▄░█ █▄▀ █▀ █ █▀▀ █▄█
   ▄█ ░█░ █▄█ █░▀█ █░█ ▄█ █ █▀░ ░█░`)
