@@ -19,10 +19,13 @@ ctx.strokeStyle = "#000";
 
 //Load image
 const imageObj = new Image();
+imageObj.src = "stonks.jpg";
+
 if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
 }
+
 imageObj.onload = function () {
   ctx.drawImage(imageObj, 0, 0);
   //Need to add word only after the image is loaded, otherwise no image will appear
@@ -34,7 +37,6 @@ imageObj.onload = function () {
     enterWord(urlWord);
   }
 };
-imageObj.src = "stonks.jpg";
 
 const vowels = "aeiouy";
 const consonants = "bcdfghjklmnpqrstvwxz";
@@ -227,6 +229,7 @@ function getStonksifiedWords(s) {
   let allStonksWords = new Set();
   let sLower = s.toLowerCase();
   let wordsList = sLower.split(" ");
+  let lockedWords = Array(wordsList).fill(false); //Used for hardcoded lookup/replace
   console.groupCollapsed("Regex Details: " + sLower);
 
   allStonksWords.add(wordsList.join(" "));
@@ -235,18 +238,24 @@ function getStonksifiedWords(s) {
     let replaceWith = stonksifyRules[i][1];
 
     // for each word in the string to be stonked
-    for (let ii = 0; ii < wordsList.length; ii++) {
-      // apply rule to word at ii
-      let newWord = wordsList[ii].replace(toReplace, replaceWith);
-      wordsList[ii] = newWord;
-      console.log(
-        `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
-      );
-      if (newWord != wordsList[ii]) {
-        console.log(`Rule applied, created werd ${newWord}.`);
+    for (let j = 0; j < wordsList.length; j++) {
+      let originalWord = wordsList[j];
+      if (originalWord in hardCodedDictionary) {
+        let hardCodedValue = hardCodedDictionary[originalWord];
+        wordsList[j] = hardCodedValue;
+        console.log(`Hardcoded match found! Replacing ${originalWord} with ${hardCodedValue}`);
+        lockedWords[j] = true;
+        break;
+      }
+      if (!lockedWords[j]) {
+        // apply rule to word at j
+        let newWord = wordsList[j].replace(toReplace, replaceWith);
+        wordsList[j] = newWord;
+        console.log(
+          `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
+        );
       }
     }
-
     // add stonkified word to list of combinations to return
     allStonksWords.add(wordsList.join(" "));
   }

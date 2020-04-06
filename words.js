@@ -18,3 +18,7 @@ const testWords = {
   drunk: "dronk",
   simpson: "sompson"
 };
+
+const hardCodedDictionary = {
+  trump: "drumpf",
+}
