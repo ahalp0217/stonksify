@@ -84,7 +84,11 @@ let rules = [
   // thick -> thicc
   ["ck", "cc", 1],
   // action -> aktion
-  ["ac", "ak", 1]
+  ["ac", "ak", 1],
+  //simpson -> sompson
+  ["sim", "som", 1],
+  //drunk -> dronk
+  ["unk", "onk", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc
