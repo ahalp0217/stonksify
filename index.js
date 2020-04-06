@@ -63,6 +63,10 @@ let rules = [
   ["([a-z]+)(ame)", "$1aym", 2],
   // build -> bild
   ["([" + consonants + "])(uil)", "$1il", 2],
+  // cybernetically -> cyberneticcly
+  ["cally$", "ccly", 2],
+  // enhance -> enhonce
+  ["ance", "once", 2],
   // house -> haus
   ["ouse$", "aus", 2],
   // tech -> tehc
@@ -74,7 +78,7 @@ let rules = [
   // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
   ["nc", "nk", 1],
   // computer -> komputer - "h" added to prevent "china" -> "khina"
-  ["^c([^eh])", "k$1", 1],
+  ["^c([^ehy]|[^ed])", "k$1", 1],
   // health -> helf
   ["ealth", "elf", 1],
   // super -> sooper, support -> soopport
