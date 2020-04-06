@@ -89,8 +89,8 @@ let rules = [
   ["sim", "som", 1],
   //drunk -> dronk
   ["unk", "onk", 1],
-  //poker -> ponker
-  ["ok", "onk", 1]
+  //poker -> ponker, think -> thonk
+  ["(o|in)k", "onk", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc

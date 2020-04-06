@@ -18,5 +18,6 @@ const testWords = {
   huge: "yuge",
   drunk: "dronk",
   simpson: "sompson",
-  poker: "ponker"
+  poker: "ponker",
+  think: "thonk"
 };
