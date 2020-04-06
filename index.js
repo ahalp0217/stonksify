@@ -65,8 +65,8 @@ let rules = [
   ["([^^][aouy])(c)", "$1n", 1],
   // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
   ["nc", "nk", 1],
-  // computer -> komputer
-  ["^c([^e])", "k$1", 1],
+  // computer -> komputer - "h" added to prevent "china" -> "khina"
+  ["^c([^eh])", "k$1", 1],
   // health -> helf
   ["ealth", "elf", 1],
   // super -> sooper, support -> soopport
@@ -88,7 +88,9 @@ let rules = [
   //simpson -> sompson
   ["sim", "som", 1],
   //drunk -> dronk
-  ["unk", "onk", 1]
+  ["unk", "onk", 1],
+  //poker -> ponker
+  ["ok", "onk", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc
