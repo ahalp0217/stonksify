@@ -57,8 +57,10 @@ let rules = [
   ["fuck", "frick", 1000],
   // huge -> yuge
   ["huge", "yuge", 1000],
+  // great -> gret
+  ["great", "gret", 1000],
   // fame -> feim
-  ["ame$", "eim", 2],
+  ["([a-z]+)(ame)", "$1eim", 2],
   // house -> haus
   ["ouse$", "aus", 2],
   // tech -> tehc
