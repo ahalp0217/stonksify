@@ -245,7 +245,6 @@ function getStonksifiedWords(s) {
         wordsList[j] = hardCodedValue;
         console.log(`Hardcoded match found! Replacing ${originalWord} with ${hardCodedValue}`);
         lockedWords[j] = true;
-        break;
       }
       if (!lockedWords[j]) {
         // apply rule to word at j
