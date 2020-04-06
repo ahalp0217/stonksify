@@ -57,6 +57,10 @@ let rules = [
   ["fuck", "frick", 1000],
   // huge -> yuge
   ["huge", "yuge", 1000],
+  // fame -> feim
+  ["ame$", "eim", 2],
+  // house -> haus
+  ["ouse$", "aus", 2],
   // tech -> tehc
   ["([a-z]+)(ch)", "$1hc", 1],
   // word -> werd
@@ -90,7 +94,9 @@ let rules = [
   //drunk -> dronk
   ["unk", "onk", 1],
   //poker -> ponker, think -> thonk
-  ["(o|in)k", "onk", 1]
+  ["(o|in)k", "onk", 1],
+  // frog -> freg
+  ["og", "eg", 1],
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc
