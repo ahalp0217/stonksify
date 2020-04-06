@@ -25,3 +25,7 @@ const testWords = {
   house: "haus",
   great: "gret"
 };
+
+const hardCodedDictionary = {
+  trump: "drumpf",
+}
