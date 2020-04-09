@@ -110,6 +110,8 @@ let rules = [
   ["(o|in)k", "onk", 1],
   // frog -> freg
   ["og", "eg", 1],
+  // fire -> fier
+  ["re$", "er", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc
