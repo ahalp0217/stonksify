@@ -24,7 +24,8 @@ const testWords = {
   fame: "faym",
   house: "haus",
   great: "gret",
-  cybernetically: "cyberneticcly"
+  cybernetically: "cyberneticcly",
+  fire: "fier"
 };
 
 const hardCodedDictionary = {
