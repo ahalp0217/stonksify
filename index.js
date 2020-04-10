@@ -329,14 +329,25 @@ function clickedPossibleWords(word) {
 
 function testStonksify() {
   //Imported testWords from words.js
+  let numTestCasesPassed = 0;
+  let numTestCasesFailed = 0;
   for (const key of Object.keys(testWords)) {
     let words = getStonksifiedWords(key);
     let stonksWord = getTopStonksifiedWord(words);
     if (stonksWord === testWords[key]) {
       colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
+      numTestCasesPassed++;
     } else {
       colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red");
+      numTestCasesFailed++;
     }
+    console.log("\n")
+  }
+  console.log("-----------------------------------------------")
+  colorTrace(`Total cases passed: ${numTestCasesPassed} ✔️`);
+  colorTrace(`Total cases failed: ${numTestCasesFailed} ❌`);
+  if (numTestCasesFailed > 0 && devMode) {
+    $("body").prepend(`<p class="failed">Failed Test Cases: ${numTestCasesFailed}. See console for details.</p>`)
   }
 }
 
