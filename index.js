@@ -346,7 +346,7 @@ function testStonksify() {
   console.log("-----------------------------------------------")
   colorTrace(`Total cases passed: ${numTestCasesPassed} ✔️`);
   colorTrace(`Total cases failed: ${numTestCasesFailed} ❌`);
-  if (numTestCasesFailed > 0) {
+  if (numTestCasesFailed > 0 && devMode) {
     $("body").prepend(`<p class="failed">Failed Test Cases: ${numTestCasesFailed}. See console for details.</p>`)
   }
 }
