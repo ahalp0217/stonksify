@@ -34,6 +34,15 @@ h1 {
   color: white;
   margin-top: 0px;
   margin-bottom: 15px;
+  width: 100%;
+}
+
+.alert a {
+  cursor: pointer;
+}
+
+#devOff {
+  background-color: #707070;
 }
 
 .selectedword {
