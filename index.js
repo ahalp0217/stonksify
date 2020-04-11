@@ -25,9 +25,6 @@ imageObj.src = "stonks.jpg";
 if (!devMode) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
-  //No console statements on production
-  //https://stackoverflow.com/questions/1215392/how-to-quickly-and-conveniently-disable-all-console-log-statements-in-my-code
-  log("not dev mode");
 }
 
 imageObj.onload = function () {
