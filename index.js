@@ -4,7 +4,7 @@ const submitButton = $("#submit");
 const shareButton = $("#share");
 const downloadButton = $("#download");
 const wordList = $("#wordlist");
-const devModeCheck = isLocal();
+const isDevModeOnLoad = isLocal();
 let devMode = isLocal();
 
 const maxWordLength = 22;
@@ -22,7 +22,7 @@ ctx.strokeStyle = "#000";
 const imageObj = new Image();
 imageObj.src = "stonks.jpg";
 
-if (!devMode) {
+if (!isDevModeOnLoad) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
 }
@@ -362,23 +362,28 @@ function addDevModeMessageBox() {
   $("body").prepend("<p class='alert' id='devOn'><a class='devLink'>DEVELOPER MODE ON</a></p>");
 }
 
-if (devModeCheck) {
+if (devMode) {
   addDevModeMessageBox();
   testStonksify();
 }
 
 //Toggle Dev Mode on Local
 $(".devLink").on("click", function () {
-  if (devModeCheck) {
-    if ($(".alert").attr("id") === "devOn") {
-      $(".devLink").text("DEVELOPER MODE OFF");
-      $(".alert").attr("id", "devOff");
-      devMode = !devMode;
-    }
-    else if ($(".alert").attr("id") === "devOff") {
-      $(".devLink").text("DEVELOPER MODE ON");
-      $(".alert").attr("id", "devOn");
-      devMode = !devMode;
-    }
+
+  if (devMode) {
+    $(".devLink").text("DEVELOPER MODE OFF");
+    $(".alert").attr("id", "devOff");
   }
+  else if (!devMode) {
+    $(".devLink").text("DEVELOPER MODE ON");
+    $(".alert").attr("id", "devOn");
+  }
+
+  devMode = !devMode;
+  //Rerun word if there is one
+  if (input.val()) {
+    log("test");
+    enterWord(input.val());
+  }
+
 });
