@@ -164,14 +164,9 @@ downloadButton.on("click", function () {
 });
 
 //Create logging functions to toggle logging between dev and prod modes
-function log(text, style) {
+function log(text, style = "") {
   if (devMode) {
-    if (style) {
-      console.log(text, style);
-    }
-    else {
-      console.log(text);
-    }
+    console.log(text, style);
   }
 }
 
@@ -375,12 +370,12 @@ if (devModeCheck) {
 //Toggle Dev Mode on Local
 $(".devLink").on("click", function () {
   if (devModeCheck) {
-    if ($(".alert").attr("id") == "devOn") {
+    if ($(".alert").attr("id") === "devOn") {
       $(".devLink").text("DEVELOPER MODE OFF");
       $(".alert").attr("id", "devOff");
       devMode = !devMode;
     }
-    else if ($(".alert").attr("id") == "devOff") {
+    else if ($(".alert").attr("id") === "devOff") {
       $(".devLink").text("DEVELOPER MODE ON");
       $(".alert").attr("id", "devOn");
       devMode = !devMode;

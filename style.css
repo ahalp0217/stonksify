@@ -37,8 +37,9 @@ h1 {
   width: 100%;
 }
 
-.alert a {
+.devLink {
   cursor: pointer;
+  text-decoration: underline;
 }
 
 #devOff {
