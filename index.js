@@ -369,7 +369,6 @@ if (devMode) {
 
 //Toggle Dev Mode on Local
 $(".devLink").on("click", function () {
-
   if (devMode) {
     $(".devLink").text("DEVELOPER MODE OFF");
     $(".alert").attr("id", "devOff");
@@ -382,7 +381,6 @@ $(".devLink").on("click", function () {
   devMode = !devMode;
   //Rerun word if there is one
   if (input.val()) {
-    log("test");
     enterWord(input.val());
   }
 
