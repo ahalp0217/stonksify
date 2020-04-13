@@ -4,7 +4,9 @@ const submitButton = $("#submit");
 const shareButton = $("#share");
 const downloadButton = $("#download");
 const wordList = $("#wordlist");
-const devMode = isLocal();
+const isDevModeOnLoad = isLocal();
+let devMode = isLocal();
+
 const maxWordLength = 22;
 
 if (!devMode) {
@@ -26,14 +28,9 @@ ctx.strokeStyle = "#000";
 const imageObj = new Image();
 imageObj.src = "stonks.jpg";
 
-if (!devMode) {
+if (!isDevModeOnLoad) {
   //https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
   imageObj.crossOrigin = "anonymous";
-  //No console statements on production
-  //https://stackoverflow.com/questions/1215392/how-to-quickly-and-conveniently-disable-all-console-log-statements-in-my-code
-  console.log = function () { };
-  console.groupCollapsed = function () { };
-  console.groupEnd = function () { };
 }
 
 imageObj.onload = function () {
@@ -129,13 +126,13 @@ const stonksifyRules = rules.sort(function compare(a, b) {
 
 input.on("keyup", function (e) {
   if (e.which === 13) {
-    console.log("Hit Enter");
+    log("Hit Enter");
     enterWord(input.val());
   }
 });
 
 submitButton.on("click", function () {
-  console.log("Clicked Submit");
+  log("Clicked Submit");
   enterWord(input.val());
 });
 
@@ -168,11 +165,30 @@ downloadButton.on("click", function () {
     link.click();
     downloadButton.text("Downloaded!");
   } catch {
-    console.log(
+    log(
       'Image can\'t be downloaded unless running on a server. Try "python -m SimpleHTTPServer 8000"'
     );
   }
 });
+
+//Create logging functions to toggle logging between dev and prod modes
+function log(text, style = "") {
+  if (devMode) {
+    console.log(text, style);
+  }
+}
+
+function groupCollapsed(text) {
+  if (devMode) {
+    console.groupCollapsed(text);
+  }
+}
+
+function groupEnd(text) {
+  if (devMode) {
+    console.groupEnd(text);
+  }
+}
 
 function getURLWord() {
   let url = new URL(window.location.href);
@@ -194,7 +210,7 @@ function copyToClipboard() {
 
 function enterWord(word) {
   if (validate(word)) {
-    console.log("Valid word: " + word);
+    log("Valid word: " + word);
     let werds = getStonksifiedWords(word);
     let newWerd = getTopStonksifiedWord(werds);
     displayAllStonksifiedWords(werds);
@@ -206,7 +222,7 @@ function enterWord(word) {
     try {
       history.pushState(null, "", "/?word=" + input.val());
     } catch {
-      console.log(
+      log(
         'URL parameter can\'t be generated unless running on a server. Try "python -m SimpleHTTPServer 8000"'
       );
     }
@@ -226,7 +242,7 @@ function getTextXCoordinate(newWerd) {
 }
 
 function drawWordOnCanvas(newWerd) {
-  console.log("Start Draw");
+  log("Start Draw");
   //Clear canvas before drawing new word
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   //Redraw image
@@ -239,7 +255,7 @@ function drawWordOnCanvas(newWerd) {
   }
   ctx.strokeText(newWerd, xCoordinate, 350);
   ctx.strokeText(newWerd, xCoordinate, 350);
-  console.log("End Draw");
+  log("End Draw");
 }
 
 function validate(word) {
@@ -260,7 +276,7 @@ function getStonksifiedWords(s) {
   let sLower = s.toLowerCase();
   let wordsList = sLower.split(" ");
   let lockedWords = Array(wordsList).fill(false); //Used for hardcoded lookup/replace
-  console.groupCollapsed("Regex Details: " + sLower);
+  groupCollapsed("Regex Details: " + sLower);
 
   allStonksWords.add(wordsList.join(" "));
   for (let i = 0; i < stonksifyRules.length; i++) {
@@ -273,14 +289,14 @@ function getStonksifiedWords(s) {
       if (!lockedWords[j] && !devMode && originalWord in hardCodedDictionary) { //Only run this on prod, need to run test cases locally without hardcoded lookup to see if regex working
         let hardCodedValue = hardCodedDictionary[originalWord];
         wordsList[j] = hardCodedValue;
-        console.log(`Hardcoded match found! Replacing ${originalWord} with ${hardCodedValue}`);
+        log(`Hardcoded match found! Replacing ${originalWord} with ${hardCodedValue}`);
         lockedWords[j] = true;
       }
       if (!lockedWords[j]) {
         // apply rule to word at j
         let newWord = wordsList[j].replace(toReplace, replaceWith);
         wordsList[j] = newWord;
-        console.log(
+        log(
           `Stonksify rule ${i} (${newWord}): replace regexp ${toReplace} + with '${replaceWith}.`
         );
       }
@@ -288,7 +304,7 @@ function getStonksifiedWords(s) {
     // add stonkified word to list of combinations to return
     allStonksWords.add(wordsList.join(" "));
   }
-  console.groupEnd();
+  groupEnd();
   return allStonksWords;
 }
 
@@ -352,7 +368,7 @@ function testStonksify() {
 }
 
 function colorTrace(msg, color) {
-  console.log("%c" + msg, "color:" + color + ";font-weight:bold;");
+  log("%c" + msg, "color:" + color + ";font-weight:bold;");
 }
 
 function isLocal() {
@@ -362,10 +378,29 @@ function isLocal() {
 }
 
 function addDevModeMessageBox() {
-  $("body").prepend("<p class='alert'>DEVELOPER MODE</p>");
+  $("body").prepend("<p class='alert' id='devOn'><a class='devLink'>DEVELOPER MODE ON</a></p>");
 }
 
 if (devMode) {
   addDevModeMessageBox();
   testStonksify();
 }
+
+//Toggle Dev Mode on Local
+$(".devLink").on("click", function () {
+  if (devMode) {
+    $(".devLink").text("DEVELOPER MODE OFF");
+    $(".alert").attr("id", "devOff");
+  }
+  else if (!devMode) {
+    $(".devLink").text("DEVELOPER MODE ON");
+    $(".alert").attr("id", "devOn");
+  }
+
+  devMode = !devMode;
+  //Rerun word if there is one
+  if (input.val()) {
+    enterWord(input.val());
+  }
+
+});
