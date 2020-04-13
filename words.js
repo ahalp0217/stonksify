@@ -24,11 +24,13 @@ const testWords = {
   fame: "faym",
   house: "haus",
   great: "gret",
-  cybernetically: "cyberneticcly"
+  cybernetically: "cyberneticcly",
+  fire: "fier"
 };
 
 const hardCodedDictionary = {
   trump: "drumpf",
   //adding enhanced here until we can prevent the "nc" -> "nk" rule from being applied
   enhanced: "enhonced",
+  cybernetically: "cyberneticcly"
 }

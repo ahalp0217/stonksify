@@ -12,6 +12,14 @@ h1 {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
   color: #fff;
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-family: "Impact";
+  margin-top: 0px;
+  color: #263238;
+  font-weight: 200;
 }
 
 #stonkscanvas {
@@ -46,6 +54,14 @@ h1 {
   background-color: #707070;
 }
 
+.failed {
+  padding: 5px;
+  background-color: #f44336;
+  color: white;
+  margin-top: 0px;
+  margin-bottom:0px;
+}
+
 .selectedword {
   border: 2px solid #3399ff;
 }
@@ -69,6 +85,7 @@ h1 {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
+  padding-right: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -165,5 +182,8 @@ h1 {
   }
   #submit {
     width: 95%;
+  }
+  h2 {
+    font-size: 20px;
   }
 }

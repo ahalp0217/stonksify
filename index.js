@@ -9,6 +9,12 @@ let devMode = isLocal();
 
 const maxWordLength = 22;
 
+if (!devMode) {
+  console.log(`
+  █▀ ▀█▀ █▀█ █▄░█ █▄▀ █▀ █ █▀▀ █▄█
+  ▄█ ░█░ █▄█ █░▀█ █░█ ▄█ █ █▀░ ░█░`)
+}
+
 //Canvas Settings
 const canvas = document.getElementById("stonkscanvas");
 const ctx = canvas.getContext("2d");
@@ -101,6 +107,8 @@ let rules = [
   ["(o|in)k", "onk", 1],
   // frog -> freg
   ["og", "eg", 1],
+  // fire -> fier (no double e's allowed)
+  ["([^e])re$", "$1er", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc
@@ -337,14 +345,25 @@ function clickedPossibleWords(word) {
 
 function testStonksify() {
   //Imported testWords from words.js
+  let numTestCasesPassed = 0;
+  let numTestCasesFailed = 0;
   for (const key of Object.keys(testWords)) {
     let words = getStonksifiedWords(key);
     let stonksWord = getTopStonksifiedWord(words);
     if (stonksWord === testWords[key]) {
       colorTrace("Test Passed ✔️: " + key + " == " + testWords[key], "green");
+      numTestCasesPassed++;
     } else {
       colorTrace("Test Failed ❌: " + key + " != " + testWords[key], "red");
+      numTestCasesFailed++;
     }
+    console.log("\n")
+  }
+  console.log("-----------------------------------------------")
+  colorTrace(`Total cases passed: ${numTestCasesPassed} ✔️`);
+  colorTrace(`Total cases failed: ${numTestCasesFailed} ❌`);
+  if (numTestCasesFailed > 0 && devMode) {
+    $("body").prepend(`<p class="failed">Failed Test Cases: ${numTestCasesFailed}. See console for details.</p>`)
   }
 }
 
