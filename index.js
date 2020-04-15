@@ -21,7 +21,6 @@ const ctx = canvas.getContext("2d");
 ctx.shadowColor = "#fff";
 ctx.shadowBlur = 50;
 ctx.fillStyle = "#fff";
-ctx.font = "40pt Impact";
 ctx.strokeStyle = "#000";
 
 //Load image
@@ -250,11 +249,15 @@ function drawWordOnCanvas(newWerd) {
   //Get x coordinate
   let xCoordinate = getTextXCoordinate(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
+  ctx.font = "40pt Impact";
   for (let i = 0; i < 10; i++) {
     ctx.fillText(newWerd, xCoordinate, 350);
   }
   ctx.strokeText(newWerd, xCoordinate, 350);
   ctx.strokeText(newWerd, xCoordinate, 350);
+
+  ctx.font = "10pt Arial"
+  ctx.fillText("stonksify.com", 5, 460);
   log("End Draw");
 }
 
