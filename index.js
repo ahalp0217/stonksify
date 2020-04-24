@@ -242,6 +242,7 @@ function getTextXCoordinate(newWerd) {
 
 function drawWordOnCanvas(newWerd) {
   log("Start Draw");
+  ctx.font = "40pt Impact";
   //Clear canvas before drawing new word
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   //Redraw image
@@ -249,7 +250,6 @@ function drawWordOnCanvas(newWerd) {
   //Get x coordinate
   let xCoordinate = getTextXCoordinate(newWerd);
   //Draw text multiple times so the white radial shadow is more pronounced
-  ctx.font = "40pt Impact";
   for (let i = 0; i < 10; i++) {
     ctx.fillText(newWerd, xCoordinate, 350);
   }
