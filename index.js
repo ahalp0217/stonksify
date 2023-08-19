@@ -75,11 +75,11 @@ let rules = [
   // word -> werd
   ["^wo([^e])", "we$1", 1],
   // stock -> stonk, but note e missing to exclude not funny examples like section -> sention
-  ["([^^][aouy])(c)", "$1n", 1],
-  // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
-  ["nc", "nk", 1],
+  ["([^^][aouy])(c)(?![ot])", "$1n", 1],
+  // // soncer -> sonker - this rule exists to transform words with 'cc' to something funnier and more pronouncable
+  // ["once", "onke", 1],
   // computer -> komputer - "h" added to prevent "china" -> "khina"
-  ["^c([^ehy]|[^ed])", "k$1", 1],
+  ["^c((?!ed|er)[^hy])", "k$1", 1],
   // health -> helf
   ["ealth", "elf", 1],
   // super -> sooper, support -> soopport
@@ -95,7 +95,7 @@ let rules = [
   // math -> meth
   ["([^^ed])a([" + consonants + "])", "$1e$2", 1],
   // thick -> thicc
-  ["ck", "cc", 1],
+  ["ck$", "cc", 1],
   // action -> aktion
   ["ac", "ak", 1],
   //simpson -> sompson
@@ -107,7 +107,226 @@ let rules = [
   // frog -> freg
   ["og", "eg", 1],
   // fire -> fier (no double e's allowed)
-  ["([^e])re$", "$1er", 1]
+  ["ire", "ier", 1],
+  // bonk -> bonmk
+  ["on([" + consonants + "])(s|)$", "onm$1$2", 1],
+  // emes -> ems
+  ["emes$", "ems", 1],
+  // doctor -> doktor
+  ["oct", "okt", 1],
+  // engineer -> enjineer
+  ["gin", "jin", 1],
+
+
+  ["([^e])re$", "$1er", 1],
+  // "coffee" -> "coffay"
+  ["offee", "offay", 1],
+  // "hello" -> "hullo"
+  ["ell", "ull", 1],
+  // "pizza" -> "pizze"
+  ["zza", "zze", 1],
+  // "internet" -> "internoot"
+  ["net$", "nit", 1],
+  // "money" -> "monay"
+  ["ey$", "ay", 1],
+  // "burger" -> "borgar"
+  ["urge", "orga", 1],
+  // "chicken" -> "chikkin"
+  ["cken", "kkin", 1],
+  // "cheese" -> "cheez"
+  ["ese", "eez", 1],
+  // "potato" -> "potatoe"
+  ["ato$", "atoe", 1],
+  // "tomato" -> "tomatoe"
+  ["ato$", "atoe", 1],
+  // "banana" -> "bananar"
+  ["ana$", "anar", 1],
+  // "apple" -> "appl"
+  ["le$", "l", 1],
+  // "orange" -> "oranj"
+  ["(!" + vowels + ")ge$", "$1j", 1],
+  // "grape" -> "grap"
+  ["pe$", "p", 1],
+  // "strawberry" -> "strawberri"
+  ["ry$", "ri", 1],
+  // "chocolate" -> "chocolat"
+  ["(" + vowels + ")(t)e$", "$1$2", 1],
+  // "caramel" -> "caramell"
+  ["(!" + vowels + ")el$", "$1ell", 1],
+  // "peanut" -> "peenut"
+  ["ea(" + consonants + ")", "ee$1", 1],
+  // "hazelnut" -> "hazelnoot"
+  ["ut$", "oot", 1],
+  // "pistachio" -> "pistachoe"
+  ["io$", "oe", 1],
+  // "macadamia" -> "macadamea"
+  ["ia$", "ea", 1],
+  // "pecan" -> "pekan"
+  ["ec(" + consonants + ")", "ek$1", 1],
+  // "walnut" -> "walnoot"
+  ["ut$", "oot", 1],
+  // "cashew" -> "cashoo"
+  ["ew$", "oo", 1],
+  // "brazil" -> "brazill"
+  ["il$", "ill", 1],
+  // "coconut" -> "cocoanoot"
+  ["ut$", "oot", 1],
+  // "date" -> "daet"
+  ["ate", "aet", 1],
+  // "fig" -> "feg"
+  ["ig$", "eg", 1],
+  // light -> lite
+  ["ight", "ite", 1],
+  // "kiwi" -> "kewi"
+  ["iwi", "ewi", 1],
+  // "mango" -> "mangoe"
+  ["o$", "oe", 1],
+  // "peach" -> "pech"
+  ["ach", "ech", 1],
+  // "pear" -> "per"
+  ["ear", "er", 1],
+  // "plum" -> "plom"
+  ["um", "om", 1],
+  // "raspberry" -> "raspberri"
+  ["ry$", "ri", 1],
+  // "hello" -> "hullo"
+  ["ello", "ullo", 1],
+  // "goodbye" -> "gudbye"
+  ["ood", "ud", 1],
+  // "please" -> "pleez"
+  ["ease", "eez", 1],
+  // "thank" -> "thunk"
+  ["ank", "unk", 1],
+  // "you" -> "u"
+  ["you", "u", 1],
+  // "are" -> "r"
+  ["are", "r", 1],
+  // "the" -> "da"
+  ["^the$", "^da$", 1],
+  // spicy -> spiccy
+  ["icy$", "iccy", 1],
+  // "and" -> "nd"
+  ["and", "nd", 1],
+  // "for" -> "4"
+  ["for", "4", 1],
+  // "have" -> "hav"
+  ["have", "hav", 1],
+  // "with" -> "wif"
+  ["with", "wif", 1],
+  // "this" -> "dis"
+  ["this", "dis", 1],
+  // "that" -> "dat"
+  ["that", "dat", 1],
+  // "from" -> "frum"
+  ["from", "frum", 1],
+  // "they" -> "dey"
+  ["they", "dey", 1],
+  // "will" -> "wil"
+  ["will", "wil", 1],
+  // "would" -> "wud"
+  ["would", "wud", 1],
+  // "there" -> "dere"
+  ["there", "dere", 1],
+  // "their" -> "der"
+  ["their", "der", 1],
+  // "what" -> "wut"
+  ["what", "wut", 1],
+  // "about" -> "abot"
+  ["about", "abot", 1],
+  // "which" -> "wich"
+  ["which", "wich", 1],
+  // "when" -> "wen"
+  ["when", "wen", 1],
+  // "make" -> "mek"
+  ["ake", "ek", 1],
+  // "can" -> "kan"
+  ["can", "kan", 1],
+  // "like" -> "lyk"
+  ["like", "lyk", 1],
+  // "time" -> "tym"
+  ["ime", "ym", 1],
+  // "just" -> "jus"
+  ["just", "jus", 1],
+  // "know" -> "no"
+  ["know", "no", 1],
+  // "take" -> "tek"
+  ["ake", "ek", 1],
+  // "people" -> "peepol"
+  ["ople", "opol", 1],
+  // "year" -> "yer"
+  ["year", "yer", 1],
+  // "your" -> "ur"
+  ["your", "ur", 1],
+  // "good" -> "gud"
+  ["ood", "ud", 1],
+  // "some" -> "sum"
+  ["some", "sum", 1],
+  // "could" -> "cud"
+  ["ould", "ud", 1],
+  // "them" -> "dem"
+  ["them", "dem", 1],
+  // "see" -> "c"
+  ["see", "c", 1],
+  // "other" -> "othr"
+  ["other", "othr", 1],
+  // "than" -> "den"
+  ["than", "den", 1],
+  // "then" -> "den"
+  ["then", "den", 1],
+  // "look" -> "luk"
+  ["ook", "uk", 1],
+  // "only" -> "onli"
+  ["nly$", "nli", 1],
+  // "come" -> "cum"
+  ["ome", "um", 1],
+  // "its" -> "it's"
+  ["its", "it's", 1],
+  // "over" -> "ovr"
+  ["over", "ovr", 1],
+  // "think" -> "thnk"
+  ["ink", "nk", 1],
+  // "also" -> "alsu"
+  ["o$", "u", 1],
+  // "back" -> "bak"
+  ["ack", "ak", 1],
+  // "after" -> "afta"
+  ["ter$", "ta", 1],
+  // "use" -> "us"
+  ["use", "us", 1],
+  // "two" -> "2"
+  ["two", "2", 1],
+  // "how" -> "haw"
+  ["ow", "aw", 1],
+  // "our" -> "r"
+  ["our", "r", 1],
+  // "work" -> "wrk"
+  ["ork", "rk", 1],
+  // "first" -> "1st"
+  ["first", "1st", 1],
+  // "well" -> "wel"
+  ["ell", "el", 1],
+  // "way" -> "wey"
+  ["ay$", "ey", 1],
+  // "even" -> "evn"
+  ["even$", "evn", 1],
+  // "new" -> "nu"
+  ["ew$", "u", 1],
+  // "want" -> "wnt"
+  ["ant", "nt", 1],
+  // "because" -> "bcuz"
+  ["because", "bcuz", 1],
+  // "any" -> "ne"
+  ["any", "ne", 1],
+  // "these" -> "deez"
+  ["these", "deez", 1],
+  // "give" -> "giv"
+  ["ive", "iv", 1],
+  // "day" -> "dey"
+  ["ay$", "ey", 1],
+  // "most" -> "moast"
+  ["ost", "oast", 1],
+  // "us" -> "us"
+  ["us", "us", 1]
 ];
 
 // sorts rules to conform to above comment order. Priority and then rule regex length desc
